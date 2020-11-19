@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        About |
+        蓝牙基础篇(04)---低功耗蓝牙和经典蓝牙概述 |
         
         传感物联
     </title>
@@ -194,7 +194,7 @@ mjx-container[display="true"] + br {
                 </li>
             
                 <li class="menu-item">
-                    <a class="active"
+                    <a class=""
                        href="/about"
                     >
                         关于
@@ -232,7 +232,7 @@ mjx-container[display="true"] + br {
                 </li>
             
                 <li class="drawer-menu-item">
-                    <a class="active"
+                    <a class=""
                        href="/about">关于</a>
                 </li>
             
@@ -252,30 +252,119 @@ mjx-container[display="true"] + br {
 
                     
                         <div class="fade-in-down-animation">
-    <div class="empty-page-container">
-        <div class="empty-page-content markdown-body">
-            
-                <h2 id="about-me" id="About-me">About me</h2>
-<ul>
-<li>XPoet「 X 诗人 」...<br />
-...<br />
-...<br />
-...</li>
-</ul>
-<hr />
-<h2 id="title%3A-mathjax-testdate%3A-2020-09-12-16%3A02%3A07tags%3A-mathjaxcategories%3A-mathjaxmathjax%3A-true" id="title-MathJax-Testdate-2020-09-12-16-02-07tags-MathJaxcategories-MathJaxmathjax-true">title: MathJax Test<br />
-date: 2020-09-12 16:02:07<br />
-tags: MathJax<br />
-categories: MathJax<br />
-mathjax: true</h2>
-<p>$$<br />
-i\hbar\frac{\partial}{\partial t}\psi=-\frac{\hbar<sup>2}{2m}\nabla</sup>2\psi+V\psi<br />
-$$</p>
+    <div class="article-content-container">
 
-            
+        <div class="article-title">
+            <span class="title-hover-animation">蓝牙基础篇(04)---低功耗蓝牙和经典蓝牙概述</span>
         </div>
-        <div class="empty-page-comments">
-            
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>iking</span>
+                        <span class="level">Lv1</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-19 16:02:28
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E8%93%9D%E7%89%99/">蓝牙</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E8%93%9D%E7%89%99/">蓝牙</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/BLE/">BLE</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa fa-file-word-o"></i> <span>1.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa fa-clock-o"></i> <span>5 Mins</span>
+        </span>
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>典蓝牙（classic Bluetooth）和低功耗蓝牙（Bluetooth low energy，简称BLE或者LE），两者有什么区别？为什么他们都叫“蓝牙”？Bluetooth low energy和Bluetooth smart两者又有什么区别？我的应用到底该选经典蓝牙技术还是低功耗蓝牙技术？这是很多刚接触蓝牙技术的人经常碰到的问题。</p>
+<p>首先，在2010年以前，当我们谈论蓝牙的时候，就是在说经典蓝牙，因为那个时候还没有低功耗蓝牙。经典蓝牙由蓝牙技术联盟（Bluetooth special interest group，简称Bluetooth SIG）提出并维护，每次SIG发布一版新的蓝牙规格时，都会指明规格的版本号，比如说蓝牙规格1.0/2.0等，其中蓝牙1.0大概在1999年左右发布的，蓝牙2.0在2004年发布，蓝牙2.1在2007年发布，蓝牙3.0在2009年发布，他们都是在2010年之前发布的，因此蓝牙1.0/2.0/2.1/3.0都是讲经典蓝牙的，里面没有任何关于低功耗蓝牙的描述。如果你打开蓝牙3.0规格书，你会发现经典蓝牙包括BR，EDR和HS(AMP)三种模式。</p>
+<p>简单来说，只要是蓝牙技术联盟(SIG)发布的技术，即可以称为蓝牙技术。2010年，SIG联盟合并了Wibree联盟（注：Wibree联盟由Nokia和Nordic等创立，旨在为手机周边设备寻找一种更低功耗的无线通信技术），并把Wibree联盟提出的低功耗无线技术重新命名为低功耗蓝牙技术（BLE），从此BLE也成了一种蓝牙技术。相应地，2010年发布的蓝牙4.0规格就同时包含经典蓝牙和低功耗蓝牙，也就是说，从蓝牙4.0之后，蓝牙才分经典蓝牙和低功耗蓝牙。其实，“经典蓝牙”这个称谓不是非常专业，它是人民群众为了口头上的方便而创造出来的，在蓝牙4.0规格中，SIG定义了四种蓝牙controller技术：BR，EDR，AMP和LE，也就是说，蓝牙只有一种蓝牙，那就是SIG的蓝牙，而蓝牙技术本身包含四种类型：BR，EDR，AMP和LE，由于LE是2010年才提出的，比较新，因此为了说起来方便，人们把之前的BR/EDR/AMP技术称为经典蓝牙技术。大家千万不要以为蓝牙4.0之后，蓝牙只有LE一种模式！</p>
+<p>为了区分所谓的低功耗蓝牙和经典蓝牙，蓝牙4.0发布之初，SIG还特意将Bluetooth low engery对外宣传为Bluetooth smart，而“Bluetooth”继续用来指代经典蓝牙，Bluetooth smart ready则用来表示双模蓝牙（即同时支持经典蓝牙和低功耗蓝牙），所以市面上有很多关于Bluetooth smart，Bluetooth，Bluetooth smart ready的宣传材料，但是这些名字不仅没有起到传播Bluetooth品牌的作用，还让众多消费者和开发者感到混淆，所以后来SIG不再频繁使用Bluetooth smart等名字，更多的是与蓝牙4.0规格对齐，直接使用LE，BR，EDR等名字进行宣传，对外也不再宣传低功耗蓝牙和经典蓝牙的不同，并将两者统一到“Bluetooth（蓝牙）”这个大品牌下面一起宣传。</p>
+<p>蓝牙技术联盟(SIG)后续发布的蓝牙4.1/4.2/5.0，都是同时包含低功耗蓝牙和经典蓝牙的。所以大家开发蓝牙应用的时候，一定要搞清楚自己是要开发低功耗蓝牙应用还是经典蓝牙应用，两者的应用场景是不同的。一般而言，经典蓝牙主要应用在蓝牙电话接听，蓝牙耳机，蓝牙音箱等场合，低功耗蓝牙应用在可穿戴设备，IoT智能设备，健身设备，蓝牙鼠标键盘等电池供电场合。当然，经典蓝牙也可以用电池供电，但LE对电池的要求更低，甚至可以用纽扣电池供电，而续航时间却很长，有的LE设备可以达到几年。下图对经典蓝牙和低功耗蓝牙的典型应用场景进行了总结。<br />
+<img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gkujwm662kj20na081gmd.jpg" alt="enter description here" /><br />
+需要引起大家注意的是，经典蓝牙和低功耗蓝牙两者物理层调制解调方式是不一样的，所以<strong>低功耗蓝牙设备和经典蓝牙设备两者之间是不能相互通信的</strong>，选型的时候千万不要搞混，如果主设备是低功耗蓝牙设备，从设备也必须是低功耗蓝牙设备；同样，经典蓝牙的从设备也只能和经典蓝牙的主设备进行通信。不过市场上还有一种双模蓝牙设备，即同时支持低功耗蓝牙和经典蓝牙，比如我们天天用到的手机，手机可以和经典蓝牙设备通信，也可以和低功耗蓝牙设备通信，如前所述，这不代表低功耗蓝牙设备可以和经典蓝牙设备通信，其实手机使用了分时机制来达到同时和低功耗蓝牙设备以及经典蓝牙设备通信的目的，即手机让双模蓝牙芯片不断地在低功耗蓝牙模式和经典蓝牙模式之间进行切换，以同时支持低功耗蓝牙设备和经典蓝牙设备。<strong>低功耗蓝牙方案，经典蓝牙方案，还是双模蓝牙方案</strong>，大家选型的时候一定要弄明白他们之间的区别，以选择适合自己的蓝牙方案。</p>
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev btn"
+                           rel="prev"
+                           href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(05)%20%E4%B8%89%E7%A7%8D%E8%93%9D%E7%89%99%E6%9E%B6%E6%9E%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E6%96%B9%E6%A1%88/"
+                        >
+                            <i class="fa fa-chevron-left"></i>
+                            <span class="post-nav-title-item">蓝牙基础篇(05)--三种蓝牙架构实现方案(蓝牙协议栈方案)</span>
+                            <span class="post-nav-item">Prev posts</span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2020/11/17/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(03)%20%E5%88%9D%E8%AF%86%E5%8D%8F%E8%AE%AE%E6%A0%88/"
+                        >
+                            <span class="post-nav-title-item">蓝牙基础篇(03)---初识协议栈</span>
+                            <span class="post-nav-item">Next posts</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
                 <div class="comments-container">
     <div id="comment-anchor"></div>
     
@@ -329,8 +418,8 @@ $$</p>
     
 </div>
 
-            
-        </div>
+            </div>
+        
     </div>
 </div>
 
@@ -367,8 +456,16 @@ $$</p>
         
 
         
+            <li class="go-comment">
+                <i class="fa fa-comment"></i>
+            </li>
+        
 
         <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
         
 
     </ul>
@@ -411,6 +508,12 @@ $$</p>
 
     <!-- page aside -->
     <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
         
     </aside>
 
@@ -466,6 +569,24 @@ $$</p>
 
 
 
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
 
 
 </body>

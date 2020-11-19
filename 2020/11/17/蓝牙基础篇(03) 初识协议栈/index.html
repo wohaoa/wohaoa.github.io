@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        蓝牙基础篇（二）---蓝牙组成 |
+        蓝牙基础篇(03)---初识协议栈 |
         
         传感物联
     </title>
@@ -255,7 +255,7 @@ mjx-container[display="true"] + br {
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">蓝牙基础篇（二）---蓝牙组成</span>
+            <span class="title-hover-animation">蓝牙基础篇(03)---初识协议栈</span>
         </div>
 
         
@@ -271,7 +271,7 @@ mjx-container[display="true"] + br {
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2020-11-13 14:17:53
+        <i class="fa fa-calendar-o"></i> 2020-11-17 17:58:19
     </span>
     
         <span class="article-categories article-meta-item">
@@ -307,12 +307,12 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa fa-file-word-o"></i> <span>465 Words</span>
+            <i class="fa fa-file-word-o"></i> <span>3k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa fa-clock-o"></i> <span>1 Mins</span>
+            <i class="fa fa-clock-o"></i> <span>10 Mins</span>
         </span>
     
     
@@ -324,25 +324,56 @@ mjx-container[display="true"] + br {
         
 
         <div class="article-content markdown-body">
-            <p>蓝牙模块共有三大部分组成：</p>
-<ul>
-<li>Host：主机，L2CAP以及L2CAP以上</li>
-<li>Controller ：控制器，HCI以下</li>
-<li>HCI：主机控制接口，传输主机host和controller之间的接口，记录了从host到controller的commands命令以及controller到host的响应events</li>
-</ul>
-<p>每个蓝牙芯片包含唯一的一个host，以及唯一的一个主控制器Primary Controller 和0个或者多一个的从控制器Secondary Controller。也就是说host只能有一个，但是controller可以有多个</p>
-<p>而蓝牙的controller控制器共有三种：</p>
-<ul>
-<li>BR/EDR controller：在蓝牙芯片中只能作为主控制器</li>
-<li>LE controller : 只能作为主控制器</li>
-<li>AMP controller：只能作为从控制器，且可以有一个或多个</li>
-</ul>
-<p>其实还有一种控制器那就是BR/EDR和LE控制器结合起来的双模控制器。那么根据控制器的类型以及组合规则可以看到，蓝牙核心系统有以下几种组合情况。<br><img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gkniwdb6bcj20n20i8mxj.jpg" alt="蓝牙核心系统组合"><br>从图片中可以看到共有七大类，那么平常所说的蓝牙属于传统蓝牙还是ble蓝牙是什么意思呢？这说的就是蓝牙的规格，而蓝牙规格也是由主控制器PrimaryController决定的。从图中可以看出蓝牙主控制器共有三种选择，所以也就决定了蓝牙的核心规格有三种。</p>
-<ul>
-<li>主控制器为BR/EDR Controller：那么蓝牙核心规格就是单模蓝牙模块，也就是我们经常说的传统蓝牙模块</li>
-<li>主控制器为LE Controller：那么蓝牙核心规格也是单模蓝牙模块，是我们经常说的BLE蓝牙模块</li>
-<li>主控制器为BR/EDR和LE Controller结合成的controller：那么蓝牙核心规格就是双模蓝牙模块，是既支持传统蓝牙功能又支持BLE低功耗蓝牙功能</li>
-</ul>
+            <p>在学习的过程中一直有疑问，为什么蓝牙技术突然就产生了呢？蓝牙技术的目的是什么呢？蓝牙技术相对于它所替代的技术存在什么样的优势和劣势呢？蓝牙技术都做了些什么呢？</p>
+<p>随着我们周围电子产品的增多电子产品之间的信息交互也越来越频繁，但是信息交互方式在无线连接出现之前只能使用有线连接，比如计算机接入键盘，鼠标，主机，扫描仪，打印机，摄像头等等，如果都是用有线连接那就会让你的工作台充满电缆，而且既然是有线的那么对这些外设的位置肯定是有要求，并且如果想要去将打印机之类外设给另一台使用还需要重新去布置.....现在想想是不是满脑子黑线？？</p>
+<p>满地的电线，一不小心再绊倒了或者是漏电了或者是移动外设时累到你了肿么办？这是绝对不允许的，所以有这么一帮为全人类的安全和幸福着想的技术人员提出了无线连接，向伟大的技术先驱工作者致敬~~</p>
+<p>就在这时无线连接应运而生----蓝牙，不用电缆，只要在一定范围内，就可以直接使用蓝牙连接。而且蓝牙支持自由的接入和退出，这也就意味着既减轻了计算机周围的电缆数量又方便在一定范围内的多个设备共用外设。</p>
+<p>当然啦，人无完人，相对于有线，蓝牙技术本身存在着一定的短板。蓝牙无线通信完全是靠着无线电波传输信息，这也就意味着在传输过程中势必会存在衰减，相对于有线直接连接接收方和发送方，蓝牙就隐晦多了，接收方没有明确指明所以必须要靠协议来确定接收方，这样一看电缆还是有一定优势的，既可以安全传输信息又可以明确接收方和发送方。</p>
+<p>有线靠电缆传输，所以传输过程中只受电缆的影响，但蓝牙太开放了，在郎朗乾坤下空气中进行传播，所以势必会有一定程度的衰减，暂不提空气中本身对电波造成的衰减，就说万一遇到障碍物干扰怎么办？没办法，只能是给把传输过程中的能量给障碍物一些，以换取通关门票。</p>
+<p>就像古代押镖的，如果能力够强且路途干扰少的话虽然很累，但货物还是能基本上安全送达，但如果遇到几个强大的劫匪的话送过来时东西被抢的也所剩无几了，或者更狠直接在半路上gameover了，你说能怎么办？这就是蓝牙传输过程中无法保证的事情。<mark>此之谓蓝牙传输过程的衰减。 #03A9F4</mark></p>
+<p>当然还有一种情况就是既然蓝牙是无线电波的传输，那么随随便便一个可以接收蓝牙对应频段的无线电波的设备就可以获取到该信息。</p>
+<p>也就相当于比如领导今天想通知只给A员工放一天假，但是没有直接给A说，而是通知了所有人，那么所有接收到这个信息的人都会屁颠儿屁颠儿的回家了。所以蓝牙传输一定要明确接收方，要不然得不偿失啊。<mark>此之谓明确蓝牙传输的目标方 #03A9F4</mark>。</p>
+<p>既然你是在空气中传播无线电波，那么我总可以给你加点儿佐料吧。比如一个古代一个丫鬟给主人送茶的途中遇到一个坏蛋，向茶里放了些有毒物质，然后主人over了，丫鬟此时必遭一劫有口说不清啊。你看，死了主子害了丫鬟。（哎，别问我为什么举这个例子，电视剧不都是这个套路吗哈哈哈哈）</p>
+<p>再比如现在这些谍战剧里不就是靠着发报来传递信息的，由此所产生的解密部门不就是破解传输的么。</p>
+<p>可见，保持传输过程中的安全是多么的重要。目前确实有人在攻击蓝牙信息的传输过程并植入病毒以此来获取并操控手机等电子设备。<mark>此之谓蓝牙传输中的信息安全的重要性。 #03A9F4</mark></p>
+<p>还有一项也是蓝牙一直在提升的地方，那就是蓝牙的功耗和传输速率。当今什么都追求更快更高更强，蓝牙当然不能落后，甚至蓝牙为此提出了低功耗蓝牙规格，努力降低无线电波发射功率，并借助跳频技术来尽量降低干扰。</p>
+<p><strong>跳频技术是什么意思呢？</strong> 就是在蓝牙通信时每隔一定时间就换一个通信频段，这次走这条下次走那条，总有一条受干扰少。想想也是很厉害的呢。</p>
+<p>蓝牙技术的实现依赖于硬件和软件的协作。蓝牙芯片是一种1立方厘米大小的嵌入式芯片，以此来保证蓝牙的体积小便于携带，我猜这也是蓝牙受欢迎的原因。</p>
+<p>既然芯片已经嵌入到产品中了那么就需要软件来与其他蓝牙产品联系起来也即是信息交换。</p>
+<p>还有一点，不同与有线连接的一对一结构，蓝牙可以形成1对多的结构。但是一个蓝牙最多能同时和7个设备通信，比如蓝牙微微网结构中的一个主节点和最多的七个从节点。</p>
+<p>蓝牙信息在物理信道上是分组传播的，每组包含3部分，其中有一部分称之为分组头，在分组头中有3bit标识了激活地址，所以激活地址选择有8种000,001，...111,但是000是预留地址，主节点没有激活地址，所以有7个激活地址供从节点使用，<mark>这也是为什么最多同时能和7个设备通信。 #03A9F4</mark></p>
+<p>由此，正好引出了蓝牙的网络拓扑结构有两种，一种是微微网Piconet,一种是散射网Scaternet。微微网中只有一个主节点，有1到7个从节点.散射网是由多个微微网组成的，所以某个微微网中的主节点有可能是另一个微微网中的从节点。<br />
+<img src="https://tva2.sinaimg.cn/large/5d7f6bc0gy1gksbg0v497j20kj0engnz.jpg" alt="enter description here" /><br />
+也就是说蓝牙的承载能力最大为7个设备，是不是相比于有线简直是极大的优势。</p>
+<p>当然一项技术如果想要广泛的流传下去并保证所有蓝牙设备间的兼容性，那必须要求各个实现蓝牙的设备遵循一个规则，参考网络协议结构，蓝牙也构建了自己的协议体系。但这总需要有一个团体来制定一个标准来制定所有规则。</p>
+<p>于是在1998年2月，一个蓝牙兴趣小组SIG（Special Interest Group）诞生了，发起者为当时的IT行业的巨头：爱立信，Intel，IBM，东芝，诺基亚。SIG的目的就是保证蓝牙的统一规范以达到蓝牙设备间的互通性。所以为实现这一目的，蓝牙sig小组有几个任务：</p>
+<p>制定蓝牙技术规范，协调各国蓝牙使用的频段（有的国家蓝牙开放频段不一致）</p>
+<p>蓝牙SIG制定了从底层到应用层的各种协议的具体要求，也制定了profile来规范如何使用应用层的协议来实现功能。这句话刚开始理解起来有些费劲，尤其是对于没接触过源码的。其实意思就相当于类似网络协议模型有很多层各个层都有很多协议，蓝牙sig就是模仿网络协议制定了蓝牙各种协议。</p>
+<p>蓝牙协议共分为四类：</p>
+<blockquote>
+<p>1，蓝牙核心协议：基带管理BB（baseBand），链路管理LMP（linkManagerProtocol），链路控制和适配L2CAP（LogicalLinkControlAndAdaptionProtocol）,服务发现SDP(ServiceDiscoveryProtocol)协议。<br />
+2，蓝牙电缆替代协议：RFCOMM协议<br />
+3，蓝牙电话控制协议：电话通信协议TCS协议，AT命令集<br />
+4，蓝牙选用协议：PPP，obex，Vcard（卡片传输），Vcal（日历传输）等等。<br />
+Ps: 以上内容引用自《蓝牙技术基础》</p>
+</blockquote>
+<p>同时蓝牙SIG也会提供profile，来规范如何使用这些协议，比如OPP (ObjectProfile）等等。相当于蓝牙sig给你做出来一系列的工具，并告诉你如果想要实现某些功能你要用到哪些工具、如何使用这些工具以及使用这些工具的先后顺序。有了这些，就可以搭建出某个profile的结构。</p>
+<p>如下图是文件传输应用协议的协议结构图<br />
+<img src="https://tva2.sinaimg.cn/large/5d7f6bc0gy1gksbillgtxj20ko0gsq48.jpg" alt="enter description here" /></p>
+<p>看到文件传输应用协议体系，是不是依旧有些懵的赶脚？没办法，慢慢看吧，看的多了就能联系起来了，如果有网络协议的基础估计学起来会快一些。</p>
+<p>那么整个蓝牙协议体系是怎样的呢？如下图所示：<br />
+<img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gksbjziju7j20c20bcaep.jpg" alt="enter description here" /><br />
+蓝牙协议体系由三部分组成：底层、中间层和应用层。至于各层都包括什么，详见上图。接下来看看各个模块的作用。</p>
+<ol>
+<li>RF射频模块：用于过滤和传输数据，发送数据时进行载波调制，接收数据时进行电波的高频信号解调。说白了射频的目的就是能够保证通过蓝牙发输出的电波工作在2.4Ghz频段，以及保证过滤到的是2.4GHz的信号。起到一个滤波器和信号发送器和接收器的作用。</li>
+<li>BB基带层模块：实现电路交换和分组交换（具体待分析）</li>
+<li>LMP链路管理：管理蓝牙设备间的链路的建立和解除链接，以及传输链路的切换和传输过程中的安全加密。蓝牙包括两种链路ACL （AsychronousConnectionless面向无连接的异步链路，适用于发送数据）和SCO（Synchronous Connection Oriented面向连接的同步链路，适用于发送语音）</li>
+<li>L2CAP逻辑链路控制和适配协议：蓝牙在信道传输是分组传输，该协议用于对数据进行分组、提取、重新组装。</li>
+<li>SDP服务发现协议：用于发现对方蓝牙设备支持什么样的应用层profile，比如通过扫描到的BluetoothDevice获取到所支持的uuid，每个应用层profile都有其对应的profile。通常我们在设置--蓝牙配对详情界面所看到的可用配置项就是sdp作用的结果。</li>
+<li>TCS（TelephoneCommunicationProtocal）电话通信协议：用于实现通过蓝牙设备来呼叫拨打电话。</li>
+</ol>
+<p>蓝牙协议体系暂时就这么多，简单理解就是有一个叫做sig的组织，规定了一些蓝牙的基本协议，然后为了实现某个功能比如文件传输，你需要从这些协议中挑出需要用哪些协议，以及这些协议如何进行协作，于是文件传输的应用profile体系就出来。</p>
+<p>当然你在搭建这个profile时sig给了你一个大的框架那就是最底层是射频和基带来保证无线电波的过滤和产生，紧接着就是一个带有传输层协议的中间层来处理传输过程中的数据包，最后就是一些应用层的协议了。</p>
 
         </div>
 
@@ -352,10 +383,10 @@ mjx-container[display="true"] + br {
                     <div class="article-prev">
                         <a class="prev btn"
                            rel="prev"
-                           href="/2020/11/16/hello-world/"
+                           href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(04)%20%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E5%92%8C%E7%BB%8F%E5%85%B8%E8%93%9D%E7%89%99%E6%A6%82%E8%BF%B0/"
                         >
                             <i class="fa fa-chevron-left"></i>
-                            <span class="post-nav-title-item">Hello World</span>
+                            <span class="post-nav-title-item">蓝牙基础篇(04)---低功耗蓝牙和经典蓝牙概述</span>
                             <span class="post-nav-item">Prev posts</span>
                         </a>
                     </div>
@@ -364,9 +395,9 @@ mjx-container[display="true"] + br {
                     <div class="article-next">
                         <a class="next btn"
                            rel="next"
-                           href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(%E4%B8%80)%20%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99/"
+                           href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(02)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/"
                         >
-                            <span class="post-nav-title-item">蓝牙基础篇(一)---何为蓝牙</span>
+                            <span class="post-nav-title-item">蓝牙基础篇(02)---蓝牙组成</span>
                             <span class="post-nav-item">Next posts</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>

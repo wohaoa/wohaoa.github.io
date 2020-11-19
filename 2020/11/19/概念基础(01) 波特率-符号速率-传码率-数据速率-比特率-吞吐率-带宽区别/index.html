@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        About |
+        概念基础(01)-波特率/符号速率/传码率/数据速率/比特率/吞吐率/带宽区别 |
         
         传感物联
     </title>
@@ -194,7 +194,7 @@ mjx-container[display="true"] + br {
                 </li>
             
                 <li class="menu-item">
-                    <a class="active"
+                    <a class=""
                        href="/about"
                     >
                         关于
@@ -232,7 +232,7 @@ mjx-container[display="true"] + br {
                 </li>
             
                 <li class="drawer-menu-item">
-                    <a class="active"
+                    <a class=""
                        href="/about">关于</a>
                 </li>
             
@@ -252,30 +252,125 @@ mjx-container[display="true"] + br {
 
                     
                         <div class="fade-in-down-animation">
-    <div class="empty-page-container">
-        <div class="empty-page-content markdown-body">
-            
-                <h2 id="about-me" id="About-me">About me</h2>
-<ul>
-<li>XPoet「 X 诗人 」...<br />
-...<br />
-...<br />
-...</li>
-</ul>
-<hr />
-<h2 id="title%3A-mathjax-testdate%3A-2020-09-12-16%3A02%3A07tags%3A-mathjaxcategories%3A-mathjaxmathjax%3A-true" id="title-MathJax-Testdate-2020-09-12-16-02-07tags-MathJaxcategories-MathJaxmathjax-true">title: MathJax Test<br />
-date: 2020-09-12 16:02:07<br />
-tags: MathJax<br />
-categories: MathJax<br />
-mathjax: true</h2>
-<p>$$<br />
-i\hbar\frac{\partial}{\partial t}\psi=-\frac{\hbar<sup>2}{2m}\nabla</sup>2\psi+V\psi<br />
-$$</p>
+    <div class="article-content-container">
 
-            
+        <div class="article-title">
+            <span class="title-hover-animation">概念基础(01)-波特率/符号速率/传码率/数据速率/比特率/吞吐率/带宽区别</span>
         </div>
-        <div class="empty-page-comments">
-            
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>iking</span>
+                        <span class="level">Lv1</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-19 16:28:50
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%9F%A5%E7%BC%BA%E8%A1%A5%E6%BC%8F/">查缺补漏</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">基础概念</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa fa-file-word-o"></i> <span>927 Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa fa-clock-o"></i> <span>3 Mins</span>
+        </span>
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>工作中我们经常碰到这几个概念，由于这几个概念意思很接近，给我们带来很大的困惑，有时还把他们搞混，今天我们就来谈谈这几个概念，希望对大家理解他们能有所帮助。</p>
+<p>在讲述这几个概念之前，我们先看看信号一般是如何在信道上传输的。<br />
+<img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gkukeebg7zj20ib02ymxd.jpg" alt="enter description here" /><br />
+如上图所述，虽然我们只想传输bit0~bit7，但由于通信机制的限制，我们必须在bit0之前加上start bit或者起始帧，在bit7之后加上stop bit或者结束帧，以及其他冗余部分。以上图来做参考，我们看看上述概念都是如何定义的。</p>
+<ul>
+<li><strong>波特率</strong>（Baud or Baud rate），单位bps （bits per second）或者baud本身就是单位，即1baud = 1bps，波特率就是图中的t1，表示一秒钟最多可以传输多少个符号（码元）。</li>
+<li><strong>Symbol rate</strong>（符号速率，或者传码率，或者码元传输速率），单位sps（symbol per second），symbol rate就等于波特率，即符号速率（传码率）也对应图中的t1。</li>
+<li><strong>比特率</strong>（bit rate），单位bps（ bits per second），比特率跟符号速率（传码率）意思很接近，像图中情况，你可以认为比特率=符号速率，因为图中一个符号表示一个比特。但有很多系统，一个符号可以表示多个bit，比如4PSK（QPSK），一个符号表示2个比特，因此比特率=2*符号速率。也有很多系统，多个符号表示一个bit，比如BLE coded PHY，8个符号表示一个bit，这个时候，比特率=符号速率/8。有时候，比特率也可以用来表示有效bit速率，比如上图，整个t2时间实际只传输了8bit数据（另外2bit数据属于无效数据），因此你可以认为bit rate = 8/10 symbol rate</li>
+<li><strong>数据速率</strong>（data rate），单位bps（ bits per second），data rate的具体内涵要看语境，有时候data rate = symbol rate，有时候data rate = bit rate。</li>
+<li><strong>吞吐率</strong>（data throughput），单位bps或者Bps（bits/bytes per second），吞吐率度量的是一个比较长的时间，是用户实际感受的最大“速度”，就如上图中的t3，把t3时间传输的全部有效字节除以t3，就是吞吐率。计算吞吐率时，不仅要扣除像start bit/stop bit这种冗余bits，还要扣除字节与字节之间的延时时间，以及块与块之间的延时时间，等等，因此吞吐率比数据速率要“慢”得多。</li>
+<li><strong>带宽</strong>（bandwidth）。带宽有多重内涵，在计算机和网络领域，带宽基本等价于吞吐率，单位为bps或者Bps（bits/bytes per second），请参考上面“吞吐率”说明。在信号处理/射频/微电子学领域，带宽就是两个极限频率之差，如下图所示，B就是带宽。<br />
+<img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gkukefbt3kj206w04l74a.jpg" alt="enter description here" /><br />
+极限频率之差，这才是带宽的本意，而吞吐率可以说是带宽的延伸义，为什么带宽可以延伸为“吞吐率”的意思？这个是由奈奎斯特（Nyquist）定理而来的，1924年，奈奎斯特推导出有限带宽无噪声信道的极限传码率，称为奈奎斯特定理。若信道带宽为W（单位Hz），则奈奎斯特定理的最大码元速率B（单位：sps或者baud）为：<br />
+<strong>B=2W</strong></li>
+</ul>
+<p>从上述公式可知，带宽直接决定了信道的最高传码率，因此用带宽来表示吞吐率也就在情理之中了。</p>
+<p>注：奈奎斯特定理其实就是香农采样定理的另一种表述，两者是等价的。</p>
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev btn"
+                           rel="prev"
+                           href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(06)%20%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99-BLE-%E5%8D%8F%E8%AE%AE%E6%A0%88/"
+                        >
+                            <i class="fa fa-chevron-left"></i>
+                            <span class="post-nav-title-item">蓝牙基础篇(06)--深入浅出低功耗蓝牙(BLE)协议栈</span>
+                            <span class="post-nav-item">Prev posts</span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(05)%20%E4%B8%89%E7%A7%8D%E8%93%9D%E7%89%99%E6%9E%B6%E6%9E%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E6%96%B9%E6%A1%88/"
+                        >
+                            <span class="post-nav-title-item">蓝牙基础篇(05)--三种蓝牙架构实现方案(蓝牙协议栈方案)</span>
+                            <span class="post-nav-item">Next posts</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
                 <div class="comments-container">
     <div id="comment-anchor"></div>
     
@@ -329,8 +424,8 @@ $$</p>
     
 </div>
 
-            
-        </div>
+            </div>
+        
     </div>
 </div>
 
@@ -367,8 +462,16 @@ $$</p>
         
 
         
+            <li class="go-comment">
+                <i class="fa fa-comment"></i>
+            </li>
+        
 
         <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
         
 
     </ul>
@@ -411,6 +514,12 @@ $$</p>
 
     <!-- page aside -->
     <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
         
     </aside>
 
@@ -466,6 +575,24 @@ $$</p>
 
 
 
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
 
 
 </body>

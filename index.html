@@ -258,27 +258,63 @@ mjx-container[display="true"] + br {
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2020/11/16/hello-world/">
-                        Hello World
+                    <a href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(06)%20%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99-BLE-%E5%8D%8F%E8%AE%AE%E6%A0%88/">
+                        蓝牙基础篇(06)--深入浅出低功耗蓝牙(BLE)协议栈
                     </a>
                 </h3>
 
                 <div class="home-article-content markdown-body">
                     
-                        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting...
+                        BLE协议栈为什么要分层？怎么理解BLE“连接”？如果BLE协议只有ATT层没有GATT层会发生什么？
+协议栈框架
+一般而言，我们把某个协议的实现代码称为协议栈（protocol stack），BLE协议栈就是实现低功耗蓝牙协议的代码，理解和掌握BLE协议是实现BLE协议栈的前提。在深入BLE协议栈各个组成部分之前，我们先看一下...
                     
                 </div>
 
                 <div class="home-article-meta-info-container">
                     <div class="home-article-meta-info">
-                        <span><i class="fa fa-pencil-square-o"></i> 2020-11-16</span>
+                        <span><i class="fa fa-pencil-square-o"></i> 2020-11-19</span>
                         
                             
+                                <span class="home-article-category"><i class="fa fa-folder"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/categories/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                        
+                                    </ul>
+                                </span>
+                            
+                            
+                                <span class="home-article-tag">
+                                    <i class="fa fa-tags"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/tags/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/BLE/">BLE</a>
+                                            </li>
+                                        
+                                    </ul>
+                                </span>
                             
                         
                     </div>
                     
-                    <a href="/2020/11/16/hello-world/">Read more <i class="fa fa-angle-right"></i></a>
+                    <a href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(06)%20%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99-BLE-%E5%8D%8F%E8%AE%AE%E6%A0%88/">Read more <i class="fa fa-angle-right"></i></a>
                 </div>
             </li>
         
@@ -287,8 +323,260 @@ mjx-container[display="true"] + br {
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(%E4%BA%8C)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/">
-                        蓝牙基础篇（二）---蓝牙组成
+                    <a href="/2020/11/19/%E6%A6%82%E5%BF%B5%E5%9F%BA%E7%A1%80(01)%20%E6%B3%A2%E7%89%B9%E7%8E%87-%E7%AC%A6%E5%8F%B7%E9%80%9F%E7%8E%87-%E4%BC%A0%E7%A0%81%E7%8E%87-%E6%95%B0%E6%8D%AE%E9%80%9F%E7%8E%87-%E6%AF%94%E7%89%B9%E7%8E%87-%E5%90%9E%E5%90%90%E7%8E%87-%E5%B8%A6%E5%AE%BD%E5%8C%BA%E5%88%AB/">
+                        概念基础(01)-波特率/符号速率/传码率/数据速率/比特率/吞吐率/带宽区别
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        工作中我们经常碰到这几个概念，由于这几个概念意思很接近，给我们带来很大的困惑，有时还把他们搞混，今天我们就来谈谈这几个概念，希望对大家理解他们能有所帮助。
+在讲述这几个概念之前，我们先看看信号一般是如何在信道上传输的。
+
+如上图所述，虽然我们只想传输bit0~bit7，但由于通信机制的限制，我们必须在bit0之前加上start ...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+                    <div class="home-article-meta-info">
+                        <span><i class="fa fa-pencil-square-o"></i> 2020-11-19</span>
+                        
+                            
+                                <span class="home-article-category"><i class="fa fa-folder"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/categories/%E6%9F%A5%E7%BC%BA%E8%A1%A5%E6%BC%8F/">查缺补漏</a>
+                                            </li>
+                                        
+                                        
+                                    </ul>
+                                </span>
+                            
+                            
+                                <span class="home-article-tag">
+                                    <i class="fa fa-tags"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/tags/%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">基础概念</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+                                            </li>
+                                        
+                                    </ul>
+                                </span>
+                            
+                        
+                    </div>
+                    
+                    <a href="/2020/11/19/%E6%A6%82%E5%BF%B5%E5%9F%BA%E7%A1%80(01)%20%E6%B3%A2%E7%89%B9%E7%8E%87-%E7%AC%A6%E5%8F%B7%E9%80%9F%E7%8E%87-%E4%BC%A0%E7%A0%81%E7%8E%87-%E6%95%B0%E6%8D%AE%E9%80%9F%E7%8E%87-%E6%AF%94%E7%89%B9%E7%8E%87-%E5%90%9E%E5%90%90%E7%8E%87-%E5%B8%A6%E5%AE%BD%E5%8C%BA%E5%88%AB/">Read more <i class="fa fa-angle-right"></i></a>
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(05)%20%E4%B8%89%E7%A7%8D%E8%93%9D%E7%89%99%E6%9E%B6%E6%9E%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E6%96%B9%E6%A1%88/">
+                        蓝牙基础篇(05)--三种蓝牙架构实现方案(蓝牙协议栈方案)
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        蓝牙架构实现方案有哪几种？我们一般把整个蓝牙实现方案叫做蓝牙协议栈，因此这个问题也可以这么阐述：蓝牙协议栈有哪些具体的架构方案？在蓝牙协议栈中，host是什么？controller是什么？HCI又是什么？
+大家都知道，不同的应用场景有不同的需求，因此不同的应用场景对蓝牙实现方案的要求也不一样，从而催生不同的蓝牙架构实现方案，或者...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+                    <div class="home-article-meta-info">
+                        <span><i class="fa fa-pencil-square-o"></i> 2020-11-19</span>
+                        
+                            
+                                <span class="home-article-category"><i class="fa fa-folder"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/categories/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                        
+                                    </ul>
+                                </span>
+                            
+                            
+                                <span class="home-article-tag">
+                                    <i class="fa fa-tags"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/tags/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/BLE/">BLE</a>
+                                            </li>
+                                        
+                                    </ul>
+                                </span>
+                            
+                        
+                    </div>
+                    
+                    <a href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(05)%20%E4%B8%89%E7%A7%8D%E8%93%9D%E7%89%99%E6%9E%B6%E6%9E%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E6%96%B9%E6%A1%88/">Read more <i class="fa fa-angle-right"></i></a>
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(04)%20%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E5%92%8C%E7%BB%8F%E5%85%B8%E8%93%9D%E7%89%99%E6%A6%82%E8%BF%B0/">
+                        蓝牙基础篇(04)---低功耗蓝牙和经典蓝牙概述
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        典蓝牙（classic Bluetooth）和低功耗蓝牙（Bluetooth low energy，简称BLE或者LE），两者有什么区别？为什么他们都叫“蓝牙”？Bluetooth low energy和Bluetooth smart两者又有什么区别？我的应用到底该选经典蓝牙技术还是低功耗蓝牙技术？这是很多刚接触蓝牙技术的人经常...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+                    <div class="home-article-meta-info">
+                        <span><i class="fa fa-pencil-square-o"></i> 2020-11-19</span>
+                        
+                            
+                                <span class="home-article-category"><i class="fa fa-folder"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/categories/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                        
+                                    </ul>
+                                </span>
+                            
+                            
+                                <span class="home-article-tag">
+                                    <i class="fa fa-tags"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/tags/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/BLE/">BLE</a>
+                                            </li>
+                                        
+                                    </ul>
+                                </span>
+                            
+                        
+                    </div>
+                    
+                    <a href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(04)%20%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E5%92%8C%E7%BB%8F%E5%85%B8%E8%93%9D%E7%89%99%E6%A6%82%E8%BF%B0/">Read more <i class="fa fa-angle-right"></i></a>
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/11/17/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(03)%20%E5%88%9D%E8%AF%86%E5%8D%8F%E8%AE%AE%E6%A0%88/">
+                        蓝牙基础篇(03)---初识协议栈
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        在学习的过程中一直有疑问，为什么蓝牙技术突然就产生了呢？蓝牙技术的目的是什么呢？蓝牙技术相对于它所替代的技术存在什么样的优势和劣势呢？蓝牙技术都做了些什么呢？
+随着我们周围电子产品的增多电子产品之间的信息交互也越来越频繁，但是信息交互方式在无线连接出现之前只能使用有线连接，比如计算机接入键盘，鼠标，主机，扫描仪，打印机，摄像头等...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+                    <div class="home-article-meta-info">
+                        <span><i class="fa fa-pencil-square-o"></i> 2020-11-17</span>
+                        
+                            
+                                <span class="home-article-category"><i class="fa fa-folder"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/categories/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                        
+                                    </ul>
+                                </span>
+                            
+                            
+                                <span class="home-article-tag">
+                                    <i class="fa fa-tags"></i>
+                                    <ul>
+                                        
+                                            <li>
+                                                
+                                                <a href="/tags/%E8%93%9D%E7%89%99/">蓝牙</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                                            </li>
+                                        
+                                            <li>
+                                                | 
+                                                <a href="/tags/BLE/">BLE</a>
+                                            </li>
+                                        
+                                    </ul>
+                                </span>
+                            
+                        
+                    </div>
+                    
+                    <a href="/2020/11/17/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(03)%20%E5%88%9D%E8%AF%86%E5%8D%8F%E8%AE%AE%E6%A0%88/">Read more <i class="fa fa-angle-right"></i></a>
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(02)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/">
+                        蓝牙基础篇(02)---蓝牙组成
                     </a>
                 </h3>
 
@@ -347,7 +635,7 @@ HCI：主机控制接口，传输主机host和controller之间的接口，记录
                         
                     </div>
                     
-                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(%E4%BA%8C)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/">Read more <i class="fa fa-angle-right"></i></a>
+                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(02)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/">Read more <i class="fa fa-angle-right"></i></a>
                 </div>
             </li>
         
@@ -356,15 +644,16 @@ HCI：主机控制接口，传输主机host和controller之间的接口，记录
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(%E4%B8%80)%20%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99/">
-                        蓝牙基础篇(一)---何为蓝牙
+                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(01)%20%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99/">
+                        蓝牙基础篇(01)---何为蓝牙
                     </a>
                 </h3>
 
                 <div class="home-article-content markdown-body">
                     
-                        前言蓝牙系列文章属于一个边写边研究的过程，写了三篇之后才意识到对于蓝牙从来都没有一个整体宏观的介绍，所以本文作为前言篇，写这篇文章的目的是完善蓝牙系列博文，并给大家一个对蓝牙的整体认知。
-在你进入蓝牙世界之前，先带你飞到太空整体俯视一下蓝牙这个小星球，了解它的形状，用途等等。从宏观的角度来审视这项神秘的技术。也属于蓝牙系列文章的...
+                        前言
+蓝牙系列文章属于一个边写边研究的过程，写了三篇之后才意识到对于蓝牙从来都没有一个整体宏观的介绍，所以本文作为前言篇，写这篇文章的目的是完善蓝牙系列博文，并给大家一个对蓝牙的整体认知。
+在你进入蓝牙世界之前，先带你飞到太空整体俯视一下蓝牙这个小星球，了解它的形状，用途等等。从宏观的角度来审视这项神秘的技术。也属于蓝牙系列文章...
                     
                 </div>
 
@@ -411,7 +700,7 @@ HCI：主机控制接口，传输主机host和controller之间的接口，记录
                         
                     </div>
                     
-                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(%E4%B8%80)%20%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99/">Read more <i class="fa fa-angle-right"></i></a>
+                    <a href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(01)%20%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99/">Read more <i class="fa fa-angle-right"></i></a>
                 </div>
             </li>
         
@@ -427,7 +716,9 @@ HCI：主机控制接口，传输主机host和controller之间的接口，记录
 
                 <div class="home-article-content markdown-body">
                     
-                        一、环境配置由于我们选择在Windows 10平台上使用Gitee+Hexo来搭建个人博客，且网站/博客本质上是一个资源目录，其中包含了显示的页面文本与调用的样式（CSS等）文件，因此我们需要首先在本地建立一个存储个人网站的目录，如命名为MyWebDir。接下来，我们就需要安装两个重要的环境，一个是提供版本克隆与下载跟踪的Git...
+                        一、环境配置
+由于我们选择在Windows 10平台上使用Gitee+Hexo来搭建个人博客，且网站/博客本质上是一个资源目录，其中包含了显示的页面文本与调用的样式（CSS等）文件，因此我们需要首先在本地建立一个存储个人网站的目录，如命名为MyWebDir。
+接下来，我们就需要安装两个重要的环境，一个是提供版本克隆与下载跟踪的G...
                     
                 </div>
 

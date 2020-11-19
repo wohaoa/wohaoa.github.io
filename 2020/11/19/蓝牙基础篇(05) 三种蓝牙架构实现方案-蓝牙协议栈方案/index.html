@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        蓝牙基础篇(一)---何为蓝牙 |
+        蓝牙基础篇(05)--三种蓝牙架构实现方案(蓝牙协议栈方案) |
         
         传感物联
     </title>
@@ -255,7 +255,7 @@ mjx-container[display="true"] + br {
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">蓝牙基础篇(一)---何为蓝牙</span>
+            <span class="title-hover-animation">蓝牙基础篇(05)--三种蓝牙架构实现方案(蓝牙协议栈方案)</span>
         </div>
 
         
@@ -271,7 +271,7 @@ mjx-container[display="true"] + br {
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2020-11-13 13:35:41
+        <i class="fa fa-calendar-o"></i> 2020-11-19 16:19:03
     </span>
     
         <span class="article-categories article-meta-item">
@@ -307,12 +307,12 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa fa-file-word-o"></i> <span>2.1k Words</span>
+            <i class="fa fa-file-word-o"></i> <span>1.2k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa fa-clock-o"></i> <span>7 Mins</span>
+            <i class="fa fa-clock-o"></i> <span>4 Mins</span>
         </span>
     
     
@@ -324,44 +324,17 @@ mjx-container[display="true"] + br {
         
 
         <div class="article-content markdown-body">
-            <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>蓝牙系列文章属于一个边写边研究的过程，写了三篇之后才意识到对于蓝牙从来都没有一个整体宏观的介绍，所以本文作为前言篇，写这篇文章的目的是完善蓝牙系列博文，并给大家一个对蓝牙的整体认知。</p>
-<p>在你进入蓝牙世界之前，先带你飞到太空整体俯视一下蓝牙这个小星球，了解它的形状，用途等等。从宏观的角度来审视这项神秘的技术。也属于蓝牙系列文章的开篇。毕竟一篇好的文章不仅仅是要做到细枝末节（很显然，我距离这个还很远），也要对整体的轮廓做个概述。先是要明白蓝牙究竟是什么，有什么用，为什么要用它，这些功能又是如何实现的等等。学习过程亦是如此。</p>
-<p>如果对一个东西没有个整体印象那么又怎么能明确你所学习和掌握的跟它有没有关系呢？技术这种东西，如果没人分享造成断层，那么后人又如何才能将之发扬光大呢？？！！所以，谨以此文，献给技术。</p>
-<h5 id="命名渊源"><a href="#命名渊源" class="headerlink" title="命名渊源"></a>命名渊源</h5><p>首先要问，为什么要叫做蓝牙——Bluetooth即名字由来</p>
-<p>Bluetooth这个名字并不带任何技术性，它既不是缩写也不代表任何东西。据悉是来自于一名丹麦国王 (Harald Blåtand)，他有两件举世闻名的事件，一是在958年统一了丹麦和挪威，二是他的坏牙是深蓝/灰色的（也因此有了Bluetooth这个别称）。</p>
-<p>在1996年的某一天，三大行业领袖因特尔、爱立信和诺基亚开会计划建立支持不同产业和行业之间短距离的无线通信标准，在会议上来自因特尔的Jim Kardash建议使用Bluetooth作为临时代码别称，Jim Kardash说“ Harald Bluetooth国王因统一了各战乱派而闻名，就像我们计划借助短距离无线连接来联合PC和电话行业”。也即因此，沿用了丹麦国王的名字。照这么说来，如果蓝牙是由中国人发明的话那就应该称之为秦始皇，毕竟统一了六国呀，开个玩笑。</p>
-<p>但在不久之后，需要为Bluetooth重新赋予一个严肃的名字。当时给出了两个选择一是RadioWire （无线)，二是PAN（个人局域网）。当时优先考虑PAN这个名字，但是调查后发现PAN已经在互联网上出现了成千上万次，所以就给否定了。而RadioWire又因为商标无法及时发布导致被弃用，别无选择，Bluetooth又成了唯一…</p>
-<p>很庆幸当时否定了pan，跟Bluetooth相比，pan简直是太难听了。 也因此Bluetooth成为了短距离无线通信的代名词。</p>
-<p>而蓝牙的图标则取决于符文（Hagall）（ᚼ）和（Bjarkan）（ᛒ），首字母正好是丹麦国王Harald的缩写</p>
-<h5 id="何为蓝牙"><a href="#何为蓝牙" class="headerlink" title="何为蓝牙"></a>何为蓝牙</h5><p>那么蓝牙是什么呢？？</p>
-<p>蓝牙是一种低功耗的无线连接技术，是一种设备间短距离的无线通讯方式，这句话表明以下几个信息，</p>
-<ul>
-<li>低耗能技术</li>
-<li>蓝牙跨设备通信</li>
-<li>蓝牙属于短距离通信方式</li>
-<li>蓝牙是一种无线通信方式，既然是无线通信那么势必需要通讯协议标准即蓝牙通信协议</li>
-</ul>
-<p>长期以来，看到蓝牙众多的配置文件和协议一直都很乱，其实蓝牙在使用时总共有三种功能</p>
-<ul>
-<li>跨设备传输流式音频</li>
-<li>跨设备传输数据</li>
-<li>广播信息</li>
-</ul>
-<p>对于一个蓝牙新手来说，首先一定要明白，蓝牙技术有两种类型、三种通信方式。在研究时一定要先明白自己研究的是蓝牙的什么技术，什么通信方式。</p>
-<p>我所说的两种技术就是平常所说的传统蓝牙和ble低功耗蓝牙，这两种技术类型对比如下：</p>
-<p>Basic Rate/Enhanced Data Rate (BR/EDR)基本速率/增强数据速率即所谓的传统蓝牙技术（蓝牙版本2.0/2.1）：<br>仅支持P2P一种通信方式，即1：1设备间通信，具有持续无线连接、优化音频流的特点，所以是蓝牙耳机、蓝牙扬声器等音频传输的理想方案<br>Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版本4.0/4.1/4.2/4.3），支持三种通信方式：<br>第一，P2P(point-to-point)（点对点）:1:1支持短时间无限连接，优化了数据传输能量消耗，可用于无线键盘、无线鼠标等。<br>第二，broadcast（广播信息）:1:m。可以实现本地化信息共享。广播信息顾名思义，一设备广播信息，其他对该信息感兴趣的设备接受该信息并进行处理。比如beacon。<br>第三，mesh(网格):m:m</p>
-<p>三种通信方式即三种拓扑结构对比：<br><img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknee29j2xj20jm04nwev.jpg" alt="三种通信方式"><br>两种蓝牙技术对比：<br><img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknegobe9oj20k00onmz0.jpg" alt="蓝牙技术对比"><br>既然蓝牙技术有两种类型，那么按照排列组合也自然而然可以明白当前市面上目前为什么会有三种蓝牙规格了，说白了也就是有三种蓝牙设备模块，不同之处就在于所搭载的蓝牙技术。一般手机都是蓝牙双模的。</p>
-<p><strong>搭载蓝牙BR/EDR：</strong><br>       传统蓝牙模块，建立相对较短距离的持续无线连接，因此非常适用于流式音频等应用。<br><strong>搭载蓝牙LE：</strong><br>       可建立短时间的长距离无线电连接，非常适用于无需持续连接但依赖电池具有较长寿命的的物联网 (IoT) 应用。<br><strong>搭载双模蓝牙：</strong><br>       同时大袋蓝牙le和传统蓝牙两种技术。双模芯片可支持需要连接 BR/EDR 设备（例如音频耳机）以及 LE 设备（例如穿戴设备或零售信标）的单一设备（例如智能手机或平板电脑）。</p>
-<p>按照版本来说，蓝牙又分为好多版本,常见的比如2.0/2.1/4.0/4.1/4.2/4.3，不同的版本会有不同的蓝牙规格，以及蓝牙的数据传输速率、蓝牙通信距离等都有所不同。</p>
-<p>对于作者来说，从研究条件以及自身兴趣点出发，我会去研究双模蓝牙。每种蓝牙规格有不同的蓝牙规范，蓝牙规范是什么呢？蓝牙规范包含两部分</p>
-<p>一部分是应用层协议，比如hfp，a2dp等等各种profile上层配置文件，称之为蓝牙应用层规范<br>另一部分就是蓝牙的核心规范–BluetoothCoreSpecification,蓝牙sig官网有各个版本对应的核心规范规格书，大家可以自行下载。</p>
-<h5 id="蓝牙应用"><a href="#蓝牙应用" class="headerlink" title="蓝牙应用"></a>蓝牙应用</h5><p>那么蓝牙的应用场景呢？ 蓝牙的应用到底有多广泛呢？用一组数据告诉你：蓝牙已经整合到了超过 30,000 个蓝牙 SIG成员生产的 82 亿件产品中。蓝牙应用已经渗透到了生活的方方面面</p>
-<p>汽车：车载蓝牙，免提呼叫，蓝牙播放音频。全球 12 家主要汽车制造商全部都提供蓝牙免提呼叫系统。智能家居，实现家居自动化，零售位置导向式服务等等。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>文章看到这里，你应该已经搞明白了蓝牙是什么，有什么功能，有什么技术，有什么通信方式，在什么地方用到。研究到这里，就应该研究一下蓝牙的组成了。</p>
-<p>不同种类的蓝牙模块即不同规格的蓝牙具有不同的系统结构。但也有一些共通的：包含射频收发器、基带和协议栈。有关于蓝牙的协议介绍留在下一篇。</p>
-<p>蓝牙的应用已经不再是趋势的问题了，绝对是一个好的研究方向，各位加油吧。</p>
-<p>文章很短，你看完了么？对蓝牙有概念性的认识了吗？问一下自己蓝牙到底是什么，有什么用，该如何着手研究。</p>
-<p>转载自知乎：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54073576">https://zhuanlan.zhihu.com/p/54073576</a></p>
+            <p>蓝牙架构实现方案有哪几种？我们一般把整个蓝牙实现方案叫做蓝牙协议栈，因此这个问题也可以这么阐述：蓝牙协议栈有哪些具体的架构方案？在蓝牙协议栈中，host是什么？controller是什么？HCI又是什么？</p>
+<p>大家都知道，不同的应用场景有不同的需求，因此不同的应用场景对蓝牙实现方案的要求也不一样，从而催生不同的蓝牙架构实现方案，或者说蓝牙协议栈方案。</p>
+<h5 id="%E6%9E%B6%E6%9E%841%EF%BC%9Ahost%2Bcontroller%E5%8F%8C%E8%8A%AF%E7%89%87%E6%A0%87%E5%87%86%E6%9E%B6%E6%9E%84" id="架构1：host-controller双芯片标准架构">架构1：host+controller双芯片标准架构</h5>
+<p>蓝牙是跟随手机而诞生的，如何在手机中实现蓝牙应用，是蓝牙规格首先要考虑的问题。如果你仔细阅读蓝牙核心规格，你会发现规格书更多地是站在手机角度来阐述的，然后“顺带”描述一下手机周边蓝牙设备的实现原理。如大家所熟知，手机里面包含很多SoC或者模块，每颗SoC或者模块都有自己独有的功能，比如手机应用跑在AP芯片上（一般而言，Android或者iOS开发者只需跟AP芯片打交道），显示屏，3G/4G通信，WiFi/蓝牙等都有自己专门的SoC或者模块，这些模块在物理上都会通过某种接口与AP相连。如果应用需要用到某个模块的时候，比如蓝牙通信，AP会自动跟蓝牙模块交互，从而完成蓝牙通信功能。市场上有很多种AP芯片，同时也有很多种蓝牙模块，如何保证两者的兼容性，以减轻手机的开发工作量，增加手机厂商蓝牙方案选型的灵活性，是蓝牙规格要考虑的事情。为此，蓝牙规格定义了一套标准，使得手机厂商，比如苹果，用一颗新AP替换老AP，蓝牙模块不需要做任何更改；同样用一颗新蓝牙模块换掉老蓝牙模块，AP端也不需要做任何更改。这个标准把蓝牙协议栈分成host和controller两部分，其中host跑在AP上，controller跑在蓝牙模块上，两者之间通过HCI协议进行通信，而且host具体包含协议栈那些部分，controller具体包含协议栈那些部分，两者之间通信的HCI协议如何定义，这些在蓝牙核心规格中都有详细定义，因此我把它称为双芯片标准方案。只要遵循这套标准，用户就可以随意替换Host或者Controller方案。当然，这种方案除了可以应用在手机中，也可以应用在任何其他设备中。AP芯片厂商一般会直接采用Bluez等开源协议栈来实现Host功能，而Controller部分大部分由蓝牙厂商自己来实现。另外，目前比较火的Zephyr开源蓝牙协议栈也支持这种架构。<br />
+<img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gkuk5ed2pgj20e007baa1.jpg" alt="enter description here" /></p>
+<h5 id="%E6%9E%B6%E6%9E%842%EF%BC%9A%E5%8D%95%E8%8A%AF%E7%89%87%E6%95%B4%E4%BD%93%E6%96%B9%E6%A1%88" id="架构2：单芯片整体方案">架构2：单芯片整体方案</h5>
+<p>手机周边蓝牙设备是蓝牙另外一个非常重要的应用场合，通常手机周边设备功能比较简单，但对成本非常敏感，因此采用一颗芯片来实现整个蓝牙协议栈就是非常明智的选择，即把蓝牙协议栈所有功能都放在一颗芯片上，也就是说，host和controller都放在同一颗芯片上，由于host和controller都在同一颗芯片上，因此物理HCI就没有存在的必要性，host和controller之间直接通过API来交互。像Nordic的蓝牙协议栈Softdevice，就是采用这种模式。当然Zephyr也支持这种架构。<br />
+<img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gkuk6r501hj205205zt8m.jpg" alt="enter description here" /></p>
+<h5 id="%E6%9E%B6%E6%9E%843%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%8C%E8%8A%AF%E7%89%87%E6%9E%B6%E6%9E%84" id="架构3：自定义双芯片架构">架构3：自定义双芯片架构</h5>
+<p>还有一些蓝牙设备功能比较强大，它需要一颗功能非常强大的MCU来做主应用，而蓝牙SoC只是整个系统的一部分，这种情况下，大部分蓝牙协议栈功能或者整个蓝牙协议栈功能都是跑在蓝牙SoC中，而蓝牙应用则跑在主MCU中，主MCU和蓝牙SoC之间的通信协议由厂商自己定义，因此称为自定义双芯片架构方案。这种方案也非常常见，可以说，除了架构1和架构2之外的架构，都可以称为架构3。架构3里面有一种非常特殊的情况，即主MCU和蓝牙SoC之间采用了HCI接口进行通信，由于这里的HCI只是用来进行物理通信，而通信的主体不是host和controller，通信包应用数据也不遵循蓝牙核心规格规范，因此不能把它看成第1种架构，Nordic的serialization方案就属于这种特殊情况。<br />
+<img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gkuk6sjokyj20c205ugln.jpg" alt="enter description here" /></p>
 
         </div>
 
@@ -371,10 +344,10 @@ mjx-container[display="true"] + br {
                     <div class="article-prev">
                         <a class="prev btn"
                            rel="prev"
-                           href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(%E4%BA%8C)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/"
+                           href="/2020/11/19/%E6%A6%82%E5%BF%B5%E5%9F%BA%E7%A1%80(01)%20%E6%B3%A2%E7%89%B9%E7%8E%87-%E7%AC%A6%E5%8F%B7%E9%80%9F%E7%8E%87-%E4%BC%A0%E7%A0%81%E7%8E%87-%E6%95%B0%E6%8D%AE%E9%80%9F%E7%8E%87-%E6%AF%94%E7%89%B9%E7%8E%87-%E5%90%9E%E5%90%90%E7%8E%87-%E5%B8%A6%E5%AE%BD%E5%8C%BA%E5%88%AB/"
                         >
                             <i class="fa fa-chevron-left"></i>
-                            <span class="post-nav-title-item">蓝牙基础篇（二）---蓝牙组成</span>
+                            <span class="post-nav-title-item">概念基础(01)-波特率/符号速率/传码率/数据速率/比特率/吞吐率/带宽区别</span>
                             <span class="post-nav-item">Prev posts</span>
                         </a>
                     </div>
@@ -383,9 +356,9 @@ mjx-container[display="true"] + br {
                     <div class="article-next">
                         <a class="next btn"
                            rel="next"
-                           href="/2020/11/06/Hexo-Github-Page%E4%B8%8Egitee-Page%E6%90%AD%E5%BB%BA/"
+                           href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(04)%20%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E5%92%8C%E7%BB%8F%E5%85%B8%E8%93%9D%E7%89%99%E6%A6%82%E8%BF%B0/"
                         >
-                            <span class="post-nav-title-item">Hexo+Github Page与gitee Page搭建</span>
+                            <span class="post-nav-title-item">蓝牙基础篇(04)---低功耗蓝牙和经典蓝牙概述</span>
                             <span class="post-nav-item">Next posts</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
@@ -542,7 +515,7 @@ mjx-container[display="true"] + br {
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E6%B8%8A%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">命名渊源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99"><span class="nav-number">3.</span> <span class="nav-text">何为蓝牙</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">蓝牙应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%B6%E6%9E%841%EF%BC%9Ahost+controller%E5%8F%8C%E8%8A%AF%E7%89%87%E6%A0%87%E5%87%86%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">架构1：host+controller双芯片标准架构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%B6%E6%9E%842%EF%BC%9A%E5%8D%95%E8%8A%AF%E7%89%87%E6%95%B4%E4%BD%93%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">架构2：单芯片整体方案</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%B6%E6%9E%843%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%8C%E8%8A%AF%E7%89%87%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">架构3：自定义双芯片架构</span></a></li></ol>
     </div>
 </div>
         
