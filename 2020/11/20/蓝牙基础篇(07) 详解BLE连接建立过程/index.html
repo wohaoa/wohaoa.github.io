@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        蓝牙基础篇(01)---何为蓝牙 |
+        蓝牙基础篇(07)---详解BLE连接建立过程 |
         
         传感物联
     </title>
@@ -255,7 +255,7 @@ mjx-container[display="true"] + br {
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">蓝牙基础篇(01)---何为蓝牙</span>
+            <span class="title-hover-animation">蓝牙基础篇(07)---详解BLE连接建立过程</span>
         </div>
 
         
@@ -271,7 +271,7 @@ mjx-container[display="true"] + br {
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2020-11-13 13:35:41
+        <i class="fa fa-calendar-o"></i> 2020-11-20 11:02:28
     </span>
     
         <span class="article-categories article-meta-item">
@@ -307,12 +307,12 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa fa-file-word-o"></i> <span>2.1k Words</span>
+            <i class="fa fa-file-word-o"></i> <span>2.6k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa fa-clock-o"></i> <span>7 Mins</span>
+            <i class="fa fa-clock-o"></i> <span>9 Mins</span>
         </span>
     
     
@@ -324,64 +324,70 @@ mjx-container[display="true"] + br {
         
 
         <div class="article-content markdown-body">
-            <h5 id="%E5%89%8D%E8%A8%80" id="前言">前言</h5>
-<p>蓝牙系列文章属于一个边写边研究的过程，写了三篇之后才意识到对于蓝牙从来都没有一个整体宏观的介绍，所以本文作为前言篇，写这篇文章的目的是完善蓝牙系列博文，并给大家一个对蓝牙的整体认知。</p>
-<p>在你进入蓝牙世界之前，先带你飞到太空整体俯视一下蓝牙这个小星球，了解它的形状，用途等等。从宏观的角度来审视这项神秘的技术。也属于蓝牙系列文章的开篇。毕竟一篇好的文章不仅仅是要做到细枝末节（很显然，我距离这个还很远），也要对整体的轮廓做个概述。先是要明白蓝牙究竟是什么，有什么用，为什么要用它，这些功能又是如何实现的等等。学习过程亦是如此。</p>
-<p>如果对一个东西没有个整体印象那么又怎么能明确你所学习和掌握的跟它有没有关系呢？技术这种东西，如果没人分享造成断层，那么后人又如何才能将之发扬光大呢？？！！所以，谨以此文，献给技术。</p>
-<h5 id="%E5%91%BD%E5%90%8D%E6%B8%8A%E6%BA%90" id="命名渊源">命名渊源</h5>
-<p>首先要问，为什么要叫做蓝牙——Bluetooth即名字由来</p>
-<p>Bluetooth这个名字并不带任何技术性，它既不是缩写也不代表任何东西。据悉是来自于一名丹麦国王 (Harald Blåtand)，他有两件举世闻名的事件，一是在958年统一了丹麦和挪威，二是他的坏牙是深蓝/灰色的（也因此有了Bluetooth这个别称）。</p>
-<p>在1996年的某一天，三大行业领袖因特尔、爱立信和诺基亚开会计划建立支持不同产业和行业之间短距离的无线通信标准，在会议上来自因特尔的Jim Kardash建议使用Bluetooth作为临时代码别称，Jim Kardash说“ Harald Bluetooth国王因统一了各战乱派而闻名，就像我们计划借助短距离无线连接来联合PC和电话行业”。也即因此，沿用了丹麦国王的名字。照这么说来，如果蓝牙是由中国人发明的话那就应该称之为秦始皇，毕竟统一了六国呀，开个玩笑。</p>
-<p>但在不久之后，需要为Bluetooth重新赋予一个严肃的名字。当时给出了两个选择一是RadioWire （无线)，二是PAN（个人局域网）。当时优先考虑PAN这个名字，但是调查后发现PAN已经在互联网上出现了成千上万次，所以就给否定了。而RadioWire又因为商标无法及时发布导致被弃用，别无选择，Bluetooth又成了唯一…</p>
-<p>很庆幸当时否定了pan，跟Bluetooth相比，pan简直是太难听了。 也因此Bluetooth成为了短距离无线通信的代名词。</p>
-<p>而蓝牙的图标则取决于符文（Hagall）（ᚼ）和（Bjarkan）（ᛒ），首字母正好是丹麦国王Harald的缩写</p>
-<h5 id="%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99" id="何为蓝牙">何为蓝牙</h5>
-<p>那么蓝牙是什么呢？？</p>
-<p>蓝牙是一种低功耗的无线连接技术，是一种设备间短距离的无线通讯方式，这句话表明以下几个信息，</p>
+            <p>同一款手机，为什么跟某些设备可以连接成功，而跟另外一些设备又连接不成功？同一个设备，为什么跟某些手机可以建立连接，而跟另外一些手机又无法建立连接？同一个手机，同一个设备，为什么他们两者有时候连起来很快，有时候连起来又很慢？Master是什么？slave又是什么？什么又是Connection event和slave latency？希望这篇文章能帮助你回答上述问题。<br />
+<strong>BLE连接示例</strong><br />
+假设我们有一台手机A（以安卓手机为例），一个设备B（设备名称：Nordic_HRM），如下所示，我们可以通过安卓设置菜单里面的蓝牙界面，让两者连接起来。</p>
+<ol>
+<li>打开安卓设置菜单</li>
+<li>选择“蓝牙”条目</li>
+<li>打开蓝牙</li>
+<li>等待系统搜索结果，不出意外的话，设备“Nordic_HRM”会出现在结果列表中</li>
+<li>点击“Nordic_HRM”，手机将与此设备<strong>建立连接</strong><br />
+<img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gkvh9jwniaj205k066q31.jpg" alt="enter description here" /></li>
+</ol>
+<p>上述即为大家直观感受到的“连接”，那么手机要与设备Nordic_HRM建立连接，具体包含哪些流程？他们为什么可以连接成功？下面给大家一一道来。</p>
+<p><strong>广播（advertising）</strong><br />
+在手机A(Observer)跟设备B建立连接之前，设备B需要先进行广播，即设备B（Advertiser）不断发送如下广播信号，t为广播间隔。每发送一次广播包，我们称其为一次广播事件（advertising event），因此t也称为广播事件间隔。虽然图中广播事件是用一根线来表示的，但实际上广播事件是有一个持续时间的，蓝牙芯片只有在广播事件期间才打开射频模块，这个时候功耗比较高，其余时间蓝牙芯片都处于idle状态，因此平均功耗非常低，以Nordic nRF52810为例，每1秒钟发一次广播，平均功耗不到11uA。</p>
+<p><img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gkvha6ds7pj20dz08ewem.jpg" alt="" /><br />
+上面只是一个概略图，按照蓝牙spec，实际上每一个广播事件包含三个广播包，即分别在37/38/39三个射频通道上同时广播相同的信息，即真正的广播事件是下面这个样子的。<br />
+<img src="https://tva2.sinaimg.cn/large/5d7f6bc0gy1gkvha74r93j20dh08kjre.jpg" alt="enter description here" /></p>
+<p>设备B不断发送广播信号给手机（Observer），如果手机不开启扫描窗口，手机是收不到设备B的广播的，如下图所示，不仅手机要开启射频接收窗口，而且只有手机的射频接收窗口跟广播发送的发射窗口匹配成功，而且广播射频通道和手机扫描射频通道是同一个通道，手机才能收到设备B的广播信号。也就是说，如果设备B在37通道发送广播包，而手机在扫描38通道，那么即使他们俩的射频窗口匹配，两者也是无法进行通信的。由于这种匹配成功是一个概率事件，因此手机扫到设备B也是一个概率事件，也就是说，手机有时会很快扫到设备B，比如只需要一个广播事件，手机有时又会很慢才能扫到设备B，比如需要10个广播事件甚至更多。<br />
+<img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gkvha93ecnj20g905it8q.jpg" alt="enter description here" /><br />
+<strong>建立连接（connection establishment）</strong><br />
+根据蓝牙spec规定，advertiser发送完一个广播包之后<strong>150us（T_IFS）</strong>，advertiser必须开启一段时间的射频Rx窗口，以接收来自observer的数据包。Observer就可以在这段时间里给advertiser发送连接请求。如下图所示，手机在第三个广播事件的时候扫到了设备B，并发出了<strong>连接请求CONN_REQ(CONN_REQ又称为CONNECT_IND)</strong>。<br />
+<img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gkvhaad2gij20g9096glp.jpg" alt="enter description here" /><br />
+上图的交互流程比较粗略，为此我们引入下图，以详细描述连接建立过程。</p>
+<p><img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gkvhacbr4zj20nb07sq4n.jpg" alt="图5 连接建立过程" /></p>
+<p>注：图中M代表手机，S代表设备B，M-&gt;S表示手机将数据包发给设备B，即手机开启Tx窗口，设备B开启Rx窗口；S-&gt;M正好相反，表示设备B将数据包发给手机，即设备B开启Tx窗口，手机开启Rx窗口。</p>
+<p>如图所示，手机在收到A1广播包ADV_IND后，以此为初始锚点（这个锚点不是连接的锚点），T_IFS时间后给Advertiser发送一个connection request命令，即A2数据包，告诉advertiser我将要过来连你，请做好准备。Advertiser根据connect_req命令信息做好接收准备，connect_req包含如下关键信息：</p>
 <ul>
-<li>低耗能技术</li>
-<li>蓝牙跨设备通信</li>
-<li>蓝牙属于短距离通信方式</li>
-<li>蓝牙是一种无线通信方式，既然是无线通信那么势必需要通讯协议标准即蓝牙通信协议</li>
+<li>Transmit window offset，定义如图5所示</li>
+<li>Transmit window size，定义如图5所示</li>
+<li>connect_req数据包完整定义如下所示<br />
+<img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gkvhadxnxjj20ew07smz2.jpg" alt="enter description here" /></li>
 </ul>
-<p>长期以来，看到蓝牙众多的配置文件和协议一直都很乱，其实蓝牙在使用时总共有三种功能</p>
+<p>connect_req其实是在告诉advertiser，手机将在Transmit Window期间发送第一个同步包（P1）给你，请在这段时间里把你的射频接收窗口打开。设备B收到P1后，T_IFS时间后将给手机回复数据包P2（ACK包）。一旦手机收到数据包P2，连接即可认为建立成功。当然，实际情况会比较复杂，手机有可能收不到P2，这个时候手机将持续发送同步包直到超时时间（supervision timeout）到，在此期间只要设备B回过一次ACK包，连接即算成功。所以一旦P1包发出，主机（手机）即认为连接成功，而不管有没有收到设备的ACK包。这也是为什么在Android或者iOS系统中，应用经常收到连接成功的回调事件（<strong>该回调事件就是基于P1包有没有发出，只要P1包发出，手机即认为连接成功，而不管有没有收到设备的ACK包</strong>），但实际上手机和设备并没有成功建立连接。后续手机将以<strong>P1为锚点（原点），Connection Interval为周期，周期性</strong>地给设备B发送数据包（Packet），Packet除了充当数据传送功能，它还有如下两个非常重要的功能：</p>
+<ol>
+<li>同步手机和设备的时钟，也就是说，设备每收到手机发来的一个包，都会把自己的时序原点重新设置，以跟手机同步。</li>
+<li>告诉设备你现在可以传数据给我了。连接成功后，BLE通信将变成主从模式，因此把连接发起者（手机）称为Master或者Central，把被连接者（之前的Advertiser）称为Slave或者Peripheral。BLE通信之所以为主从模式，是因为Slave不能“随性”给Master发信息，它只有等到Master给它发了一个packet后，然后才能在规定的时间把自己的数据回传给Master。</li>
+</ol>
+<p><strong>连接失败</strong><br />
+有如下几种典型的连接失败情况：</p>
+<ol>
+<li>如图5所示，如果slave在transmit window期间没有收到master发过来的P1，那么连接将会失败。此时应该排查master那边的问题，看看master为什么没有在约定的时间把P1发出来。</li>
+<li>如果master在transmit window期间把P1发出来了，也就是说master按照connect_req约定的时序把P1发出来了，但slave没有把P2回过去或者没有在超时时间内把P2回过去，那么连接也会失败。此时应该排查slave这边的问题，看一看slave为什么没有把P2回过去</li>
+<li>如果master把P1发出来了，slave也把P2回过去了，此时主机或者从机还是报连接失败，这种情况有可能是软件有问题，需要仔细排查master或者slave的软件。</li>
+<li>还有一种比较常见的连接失败情况：空中射频干扰太大。此时应该找一个干净的环境，比如屏蔽室，排除干扰后再去测试连接是否正常。</li>
+</ol>
+<p><strong>Connection events</strong><br />
+连接成功后，master和slave在每一个connection interval开始的时候，都必须交互一次，即master给slave发一个包，slave再给master发一个包，整个交互过程称为一个<strong>connection event或者gap event</strong>。蓝牙芯片只有在connection event期间才把射频模块打开，此时功耗比较高，其余时间蓝牙芯片都是处于idle状态的，因此蓝牙芯片平均功耗就非常低，以Nordic nRF52810为例，每1秒钟Master和Slave通信1次，平均功耗约为6微安左右。Master不可能时时刻刻都有数据发给slave，所以master大部分时候都是发的空包（empty packet）给slave。同样slave也不是时时刻刻都有数据给master，因此slave回复给master的包大部分时候也是空包。另外在一个connection event期间，master也可以发多个包给slave，以提高吞吐率。综上所述，连接成功后的通信时序图应该如下所示：</p>
+<p><img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gkvhaf6t14j20hc063mxh.jpg" alt="图7： 连接成功后的通信时序图（每个connection event只发一个包）" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gkvhagxnqsj20hc05xq39.jpg" alt="图9： 连接成功后的通信时序图（ connection event可能发多个包）" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gkvhahnrf3j20h305ojru.jpg" alt="图10：connection event细节图" /></p>
+<p><strong>Slave latency</strong><br />
+图10中出现了slave latency（slave latency = 1），那么什么叫slave latency？</p>
+<p>如前所述，在每一个connection interval开始的时候，Master和Slave必须交互一次，哪怕两者之间交互的是empty packet（空包），但如果slave定义了slave latency，比如slave latency = 9，此时slave可以每9个connection interval才回复一次master，也就是说slave可以在前面8个connection interval期间一直睡眠，直到第9个connection interval到来之后，才回复一个packet给master，这样将大大节省slave的功耗，提高电池续航时间。当然如果slave有数据需要上报给master，它也可以不等到第9个connection interval才上报，直接像正常情况进行传输即可，这样既节省了功耗，又提高了数据传输的实时性。<br />
+<strong>GAP层角色总结</strong><br />
+对上面提到的手机和设备B，在BLE通信过程中，随着时间的推移，他们的状态在发生变化，两者的关系也在发生变化，为此蓝牙spec根据不同的时间段或者状态给手机和设备B取不同的名字，即GAP层定义了如下角色：</p>
 <ul>
-<li>跨设备传输流式音频</li>
-<li>跨设备传输数据</li>
-<li>广播信息</li>
+<li>advertiser。 发出广播的设备</li>
+<li>observer或者scanner。可以扫描广播的设备</li>
+<li>initiator。能发起连接的设备</li>
+<li>master或者central。连接成功后的主设备，即主动发起packet的设备</li>
+<li>slave或者peripheral。连接成功后的从设备，即被动回传packet的设备</li>
 </ul>
-<p>对于一个蓝牙新手来说，首先一定要明白，蓝牙技术有两种类型、三种通信方式。在研究时一定要先明白自己研究的是蓝牙的什么技术，什么通信方式。</p>
-<p>我所说的两种技术就是平常所说的传统蓝牙和ble低功耗蓝牙，这两种技术类型对比如下：</p>
-<p>Basic Rate/Enhanced Data Rate (BR/EDR)基本速率/增强数据速率即所谓的传统蓝牙技术（蓝牙版本2.0/2.1）：<br />
-仅支持P2P一种通信方式，即1：1设备间通信，具有持续无线连接、优化音频流的特点，所以是蓝牙耳机、蓝牙扬声器等音频传输的理想方案<br />
-Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版本4.0/4.1/4.2/4.3），支持三种通信方式：<br />
-第一，P2P(point-to-point)（点对点）:1:1支持短时间无限连接，优化了数据传输能量消耗，可用于无线键盘、无线鼠标等。<br />
-第二，broadcast（广播信息）:1:m。可以实现本地化信息共享。广播信息顾名思义，一设备广播信息，其他对该信息感兴趣的设备接受该信息并进行处理。比如beacon。<br />
-第三，mesh(网格)Ⓜ️m</p>
-<p>三种通信方式即三种拓扑结构对比：<br />
-<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknee29j2xj20jm04nwev.jpg" alt="三种通信方式" /><br />
-两种蓝牙技术对比：<br />
-<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknegobe9oj20k00onmz0.jpg" alt="蓝牙技术对比" /><br />
-既然蓝牙技术有两种类型，那么按照排列组合也自然而然可以明白当前市面上目前为什么会有三种蓝牙规格了，说白了也就是有三种蓝牙设备模块，不同之处就在于所搭载的蓝牙技术。一般手机都是蓝牙双模的。</p>
-<p><strong>搭载蓝牙BR/EDR：</strong><br />
-传统蓝牙模块，建立相对较短距离的持续无线连接，因此非常适用于流式音频等应用。<br />
-<strong>搭载蓝牙LE：</strong><br />
-可建立短时间的长距离无线电连接，非常适用于无需持续连接但依赖电池具有较长寿命的的物联网 (IoT) 应用。<br />
-<strong>搭载双模蓝牙：</strong><br />
-同时大袋蓝牙le和传统蓝牙两种技术。双模芯片可支持需要连接 BR/EDR 设备（例如音频耳机）以及 LE 设备（例如穿戴设备或零售信标）的单一设备（例如智能手机或平板电脑）。</p>
-<p>按照版本来说，蓝牙又分为好多版本,常见的比如2.0/2.1/4.0/4.1/4.2/4.3，不同的版本会有不同的蓝牙规格，以及蓝牙的数据传输速率、蓝牙通信距离等都有所不同。</p>
-<p>对于作者来说，从研究条件以及自身兴趣点出发，我会去研究双模蓝牙。每种蓝牙规格有不同的蓝牙规范，蓝牙规范是什么呢？蓝牙规范包含两部分</p>
-<p>一部分是应用层协议，比如hfp，a2dp等等各种profile上层配置文件，称之为蓝牙应用层规范<br />
-另一部分就是蓝牙的核心规范--BluetoothCoreSpecification,蓝牙sig官网有各个版本对应的核心规范规格书，大家可以自行下载。</p>
-<h5 id="%E8%93%9D%E7%89%99%E5%BA%94%E7%94%A8" id="蓝牙应用">蓝牙应用</h5>
-<p>那么蓝牙的应用场景呢？ 蓝牙的应用到底有多广泛呢？用一组数据告诉你：蓝牙已经整合到了超过 30,000 个蓝牙 SIG成员生产的 82 亿件产品中。蓝牙应用已经渗透到了生活的方方面面</p>
-<p>汽车：车载蓝牙，免提呼叫，蓝牙播放音频。全球 12 家主要汽车制造商全部都提供蓝牙免提呼叫系统。智能家居，实现家居自动化，零售位置导向式服务等等。</p>
-<h5 id="%E6%80%BB%E7%BB%93" id="总结">总结</h5>
-<p>文章看到这里，你应该已经搞明白了蓝牙是什么，有什么功能，有什么技术，有什么通信方式，在什么地方用到。研究到这里，就应该研究一下蓝牙的组成了。</p>
-<p>不同种类的蓝牙模块即不同规格的蓝牙具有不同的系统结构。但也有一些共通的：包含射频收发器、基带和协议栈。有关于蓝牙的协议介绍留在下一篇。</p>
-<p>蓝牙的应用已经不再是趋势的问题了，绝对是一个好的研究方向，各位加油吧。</p>
-<p>文章很短，你看完了么？对蓝牙有概念性的认识了吗？问一下自己蓝牙到底是什么，有什么用，该如何着手研究。</p>
-<p>转载自知乎：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54073576">https://zhuanlan.zhihu.com/p/54073576</a></p>
+<p>图11通过时间把observer，initiator和central串起来了，其实这三个角色是相互独立的，也就是说一个设备可以只支持observer角色，而不支持initiator和central角色。同样，图11也把advertiser和peripheral串起来了，其实advertiser和peripheral也是相互独立的，即一个设备可以只作为advertiser角色，而不支持peripheral角色。</p>
+<p><img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gkvhajbnlmj20fa0hwmy0.jpg" alt="图11：GAP层角色" /></p>
 
         </div>
 
@@ -391,10 +397,10 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
                     <div class="article-prev">
                         <a class="prev btn"
                            rel="prev"
-                           href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(02)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/"
+                           href="/2020/11/22/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(08)%20%E8%AF%A6%E8%A7%A3BLE%E7%A9%BA%E5%8F%A3%E5%8C%85%E6%A0%BC%E5%BC%8F%E2%80%94%E5%85%BCBLE%20Link%20layer%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/"
                         >
                             <i class="fa fa-chevron-left"></i>
-                            <span class="post-nav-title-item">蓝牙基础篇(02)---蓝牙组成</span>
+                            <span class="post-nav-title-item">蓝牙基础篇(08)---详解BLE空口包格式—兼BLE Link layer协议解析</span>
                             <span class="post-nav-item">Prev posts</span>
                         </a>
                     </div>
@@ -403,9 +409,9 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
                     <div class="article-next">
                         <a class="next btn"
                            rel="next"
-                           href="/2020/11/06/Hexo-Github-Page%E4%B8%8Egitee-Page%E6%90%AD%E5%BB%BA/"
+                           href="/2020/11/19/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(06)%20%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99-BLE-%E5%8D%8F%E8%AE%AE%E6%A0%88/"
                         >
-                            <span class="post-nav-title-item">Hexo+Github Page与gitee Page搭建</span>
+                            <span class="post-nav-title-item">蓝牙基础篇(06)--深入浅出低功耗蓝牙(BLE)协议栈</span>
                             <span class="post-nav-item">Next posts</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
@@ -562,7 +568,7 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E6%B8%8A%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">命名渊源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99"><span class="nav-number">3.</span> <span class="nav-text">何为蓝牙</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">蓝牙应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol>
+        
     </div>
 </div>
         

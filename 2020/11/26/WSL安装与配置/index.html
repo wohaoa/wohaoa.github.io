@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        蓝牙基础篇(01)---何为蓝牙 |
+        WSL2安装与配置 |
         
         传感物联
     </title>
@@ -255,7 +255,7 @@ mjx-container[display="true"] + br {
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">蓝牙基础篇(01)---何为蓝牙</span>
+            <span class="title-hover-animation">WSL2安装与配置</span>
         </div>
 
         
@@ -271,7 +271,7 @@ mjx-container[display="true"] + br {
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2020-11-13 13:35:41
+        <i class="fa fa-calendar-o"></i> 2020-11-26 16:58:55
     </span>
     
         <span class="article-categories article-meta-item">
@@ -279,7 +279,7 @@ mjx-container[display="true"] + br {
             <ul>
                 
                     <li>
-                        <a href="/categories/%E8%93%9D%E7%89%99/">蓝牙</a>
+                        <a href="/categories/%E6%9D%82%E9%A1%B9/">杂项</a>
                     </li>
                 
             </ul>
@@ -291,15 +291,11 @@ mjx-container[display="true"] + br {
             <ul>
                 
                     <li>
-                        <a href="/tags/%E8%93%9D%E7%89%99/">蓝牙</a>
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E7%B1%BB/">工具类</a>
                     </li>
                 
                     <li>
-                        | <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/BLE/">BLE</a>
+                        | <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a>
                     </li>
                 
             </ul>
@@ -307,12 +303,12 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa fa-file-word-o"></i> <span>2.1k Words</span>
+            <i class="fa fa-file-word-o"></i> <span>469 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa fa-clock-o"></i> <span>7 Mins</span>
+            <i class="fa fa-clock-o"></i> <span>2 Mins</span>
         </span>
     
     
@@ -324,64 +320,55 @@ mjx-container[display="true"] + br {
         
 
         <div class="article-content markdown-body">
-            <h5 id="%E5%89%8D%E8%A8%80" id="前言">前言</h5>
-<p>蓝牙系列文章属于一个边写边研究的过程，写了三篇之后才意识到对于蓝牙从来都没有一个整体宏观的介绍，所以本文作为前言篇，写这篇文章的目的是完善蓝牙系列博文，并给大家一个对蓝牙的整体认知。</p>
-<p>在你进入蓝牙世界之前，先带你飞到太空整体俯视一下蓝牙这个小星球，了解它的形状，用途等等。从宏观的角度来审视这项神秘的技术。也属于蓝牙系列文章的开篇。毕竟一篇好的文章不仅仅是要做到细枝末节（很显然，我距离这个还很远），也要对整体的轮廓做个概述。先是要明白蓝牙究竟是什么，有什么用，为什么要用它，这些功能又是如何实现的等等。学习过程亦是如此。</p>
-<p>如果对一个东西没有个整体印象那么又怎么能明确你所学习和掌握的跟它有没有关系呢？技术这种东西，如果没人分享造成断层，那么后人又如何才能将之发扬光大呢？？！！所以，谨以此文，献给技术。</p>
-<h5 id="%E5%91%BD%E5%90%8D%E6%B8%8A%E6%BA%90" id="命名渊源">命名渊源</h5>
-<p>首先要问，为什么要叫做蓝牙——Bluetooth即名字由来</p>
-<p>Bluetooth这个名字并不带任何技术性，它既不是缩写也不代表任何东西。据悉是来自于一名丹麦国王 (Harald Blåtand)，他有两件举世闻名的事件，一是在958年统一了丹麦和挪威，二是他的坏牙是深蓝/灰色的（也因此有了Bluetooth这个别称）。</p>
-<p>在1996年的某一天，三大行业领袖因特尔、爱立信和诺基亚开会计划建立支持不同产业和行业之间短距离的无线通信标准，在会议上来自因特尔的Jim Kardash建议使用Bluetooth作为临时代码别称，Jim Kardash说“ Harald Bluetooth国王因统一了各战乱派而闻名，就像我们计划借助短距离无线连接来联合PC和电话行业”。也即因此，沿用了丹麦国王的名字。照这么说来，如果蓝牙是由中国人发明的话那就应该称之为秦始皇，毕竟统一了六国呀，开个玩笑。</p>
-<p>但在不久之后，需要为Bluetooth重新赋予一个严肃的名字。当时给出了两个选择一是RadioWire （无线)，二是PAN（个人局域网）。当时优先考虑PAN这个名字，但是调查后发现PAN已经在互联网上出现了成千上万次，所以就给否定了。而RadioWire又因为商标无法及时发布导致被弃用，别无选择，Bluetooth又成了唯一…</p>
-<p>很庆幸当时否定了pan，跟Bluetooth相比，pan简直是太难听了。 也因此Bluetooth成为了短距离无线通信的代名词。</p>
-<p>而蓝牙的图标则取决于符文（Hagall）（ᚼ）和（Bjarkan）（ᛒ），首字母正好是丹麦国王Harald的缩写</p>
-<h5 id="%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99" id="何为蓝牙">何为蓝牙</h5>
-<p>那么蓝牙是什么呢？？</p>
-<p>蓝牙是一种低功耗的无线连接技术，是一种设备间短距离的无线通讯方式，这句话表明以下几个信息，</p>
+            <p>最新得Windows 10 版本18917或更高版本中，可以安装WSL2子系统，相比于WSL1，WSL2相当于提供了更加完整的Linux支持，因此可以用来编译Android系统源码，也不用再单独安装虚拟机了。</p>
+<p><strong>系统要求</strong></p>
 <ul>
-<li>低耗能技术</li>
-<li>蓝牙跨设备通信</li>
-<li>蓝牙属于短距离通信方式</li>
-<li>蓝牙是一种无线通信方式，既然是无线通信那么势必需要通讯协议标准即蓝牙通信协议</li>
+<li>Windows 10 版本18917或更高版本中</li>
+<li>足够的存储空间</li>
 </ul>
-<p>长期以来，看到蓝牙众多的配置文件和协议一直都很乱，其实蓝牙在使用时总共有三种功能</p>
+<p><strong>准备工作</strong></p>
 <ul>
-<li>跨设备传输流式音频</li>
-<li>跨设备传输数据</li>
-<li>广播信息</li>
+<li>启用安装WSL2</li>
+<li>参考微软官方：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-install">https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-install</a></li>
 </ul>
-<p>对于一个蓝牙新手来说，首先一定要明白，蓝牙技术有两种类型、三种通信方式。在研究时一定要先明白自己研究的是蓝牙的什么技术，什么通信方式。</p>
-<p>我所说的两种技术就是平常所说的传统蓝牙和ble低功耗蓝牙，这两种技术类型对比如下：</p>
-<p>Basic Rate/Enhanced Data Rate (BR/EDR)基本速率/增强数据速率即所谓的传统蓝牙技术（蓝牙版本2.0/2.1）：<br />
-仅支持P2P一种通信方式，即1：1设备间通信，具有持续无线连接、优化音频流的特点，所以是蓝牙耳机、蓝牙扬声器等音频传输的理想方案<br />
-Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版本4.0/4.1/4.2/4.3），支持三种通信方式：<br />
-第一，P2P(point-to-point)（点对点）:1:1支持短时间无限连接，优化了数据传输能量消耗，可用于无线键盘、无线鼠标等。<br />
-第二，broadcast（广播信息）:1:m。可以实现本地化信息共享。广播信息顾名思义，一设备广播信息，其他对该信息感兴趣的设备接受该信息并进行处理。比如beacon。<br />
-第三，mesh(网格)Ⓜ️m</p>
-<p>三种通信方式即三种拓扑结构对比：<br />
-<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknee29j2xj20jm04nwev.jpg" alt="三种通信方式" /><br />
-两种蓝牙技术对比：<br />
-<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknegobe9oj20k00onmz0.jpg" alt="蓝牙技术对比" /><br />
-既然蓝牙技术有两种类型，那么按照排列组合也自然而然可以明白当前市面上目前为什么会有三种蓝牙规格了，说白了也就是有三种蓝牙设备模块，不同之处就在于所搭载的蓝牙技术。一般手机都是蓝牙双模的。</p>
-<p><strong>搭载蓝牙BR/EDR：</strong><br />
-传统蓝牙模块，建立相对较短距离的持续无线连接，因此非常适用于流式音频等应用。<br />
-<strong>搭载蓝牙LE：</strong><br />
-可建立短时间的长距离无线电连接，非常适用于无需持续连接但依赖电池具有较长寿命的的物联网 (IoT) 应用。<br />
-<strong>搭载双模蓝牙：</strong><br />
-同时大袋蓝牙le和传统蓝牙两种技术。双模芯片可支持需要连接 BR/EDR 设备（例如音频耳机）以及 LE 设备（例如穿戴设备或零售信标）的单一设备（例如智能手机或平板电脑）。</p>
-<p>按照版本来说，蓝牙又分为好多版本,常见的比如2.0/2.1/4.0/4.1/4.2/4.3，不同的版本会有不同的蓝牙规格，以及蓝牙的数据传输速率、蓝牙通信距离等都有所不同。</p>
-<p>对于作者来说，从研究条件以及自身兴趣点出发，我会去研究双模蓝牙。每种蓝牙规格有不同的蓝牙规范，蓝牙规范是什么呢？蓝牙规范包含两部分</p>
-<p>一部分是应用层协议，比如hfp，a2dp等等各种profile上层配置文件，称之为蓝牙应用层规范<br />
-另一部分就是蓝牙的核心规范--BluetoothCoreSpecification,蓝牙sig官网有各个版本对应的核心规范规格书，大家可以自行下载。</p>
-<h5 id="%E8%93%9D%E7%89%99%E5%BA%94%E7%94%A8" id="蓝牙应用">蓝牙应用</h5>
-<p>那么蓝牙的应用场景呢？ 蓝牙的应用到底有多广泛呢？用一组数据告诉你：蓝牙已经整合到了超过 30,000 个蓝牙 SIG成员生产的 82 亿件产品中。蓝牙应用已经渗透到了生活的方方面面</p>
-<p>汽车：车载蓝牙，免提呼叫，蓝牙播放音频。全球 12 家主要汽车制造商全部都提供蓝牙免提呼叫系统。智能家居，实现家居自动化，零售位置导向式服务等等。</p>
-<h5 id="%E6%80%BB%E7%BB%93" id="总结">总结</h5>
-<p>文章看到这里，你应该已经搞明白了蓝牙是什么，有什么功能，有什么技术，有什么通信方式，在什么地方用到。研究到这里，就应该研究一下蓝牙的组成了。</p>
-<p>不同种类的蓝牙模块即不同规格的蓝牙具有不同的系统结构。但也有一些共通的：包含射频收发器、基带和协议栈。有关于蓝牙的协议介绍留在下一篇。</p>
-<p>蓝牙的应用已经不再是趋势的问题了，绝对是一个好的研究方向，各位加油吧。</p>
-<p>文章很短，你看完了么？对蓝牙有概念性的认识了吗？问一下自己蓝牙到底是什么，有什么用，该如何着手研究。</p>
-<p>转载自知乎：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54073576">https://zhuanlan.zhihu.com/p/54073576</a></p>
+<p><strong>安装Ubuntu</strong><br />
+应用商店中搜索Ubuntu，安装Ubuntu 18.04发行版<br />
+<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gl2lf0adrzj20zk0rswhh.jpg" alt="微信截图_20201126151125" /></p>
+<p><strong>修改安装源</strong><br />
+默认的源更新起来慢，可以修改成阿里云的源</p>
+<ul>
+<li>备份原始源</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sourses.list.bak</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更新阿里源</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/apt/sources.list</span><br><span class="line"># 将里面的内容替换成</span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>更新</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+<p><strong>Windows Terminal</strong><br />
+Windows Terminal是微软推出的一个现代化Terminal工具，很好用</p>
+<ul>
+<li>到应用商店搜索Windows Terminal安装<br />
+<img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gl2lfi56alj20zk0rsjuo.jpg" alt="微信截图_20201126151048" /></li>
+</ul>
+<p><strong>更改Terminal配色</strong><br />
+terminal可以为powershell或Ubuntu配置单独的配色，打开terminal设置会打开全局的配置文件：<br />
+<img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gl2lj4x9g2j20qp09x3zq.jpg" alt="微信截图_20201126151531" /><br />
+以配置Ubuntu配色为例：<br />
+将JSON代码复制到settings.json中的正确位置如下图，例如：<br />
+<img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gl2llybfufj20on0cr74p.jpg" alt="微信截图_20201126151759" /><br />
+<img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gl2npcokasj20kl0ffdgd.jpg" alt="微信截图_20201126151817" /><br />
+其他配色参见：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/terminal/custom-terminal-gallery/custom-schemes">https://docs.microsoft.com/en-us/windows/terminal/custom-terminal-gallery/custom-schemes</a></p>
+<p><strong>添加git bash</strong><br />
+在settings.json的profile配置项目中添加：<br />
+<img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gl2o9s5r4dj20r70c1gm2.jpg" alt="微信截图_20201126165023" /></p>
+<p>参考：<br />
+<a target="_blank" rel="noopener" href="https://www.vectoros.club/post/fe9083b4.html">WSL2中编译安卓源码</a><br />
+<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10">适用于 Linux 的 Windows 子系统安装指南</a><br />
+<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/dev-environment/overview">在 Windows 10 上设置开发环境</a></p>
 
         </div>
 
@@ -391,10 +378,10 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
                     <div class="article-prev">
                         <a class="prev btn"
                            rel="prev"
-                           href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(02)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/"
+                           href="/2020/11/26/%E4%BB%80%E4%B9%88%E6%98%AF%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA%E7%B3%BB%E7%BB%9F%EF%BC%9F/"
                         >
                             <i class="fa fa-chevron-left"></i>
-                            <span class="post-nav-title-item">蓝牙基础篇(02)---蓝牙组成</span>
+                            <span class="post-nav-title-item">什么是惯性导航系统？</span>
                             <span class="post-nav-item">Prev posts</span>
                         </a>
                     </div>
@@ -403,9 +390,9 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
                     <div class="article-next">
                         <a class="next btn"
                            rel="next"
-                           href="/2020/11/06/Hexo-Github-Page%E4%B8%8Egitee-Page%E6%90%AD%E5%BB%BA/"
+                           href="/2020/11/22/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(08)%20%E8%AF%A6%E8%A7%A3BLE%E7%A9%BA%E5%8F%A3%E5%8C%85%E6%A0%BC%E5%BC%8F%E2%80%94%E5%85%BCBLE%20Link%20layer%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90/"
                         >
-                            <span class="post-nav-title-item">Hexo+Github Page与gitee Page搭建</span>
+                            <span class="post-nav-title-item">蓝牙基础篇(08)---详解BLE空口包格式—兼BLE Link layer协议解析</span>
                             <span class="post-nav-item">Next posts</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
@@ -562,7 +549,7 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E6%B8%8A%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">命名渊源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99"><span class="nav-number">3.</span> <span class="nav-text">何为蓝牙</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">蓝牙应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol>
+        
     </div>
 </div>
         

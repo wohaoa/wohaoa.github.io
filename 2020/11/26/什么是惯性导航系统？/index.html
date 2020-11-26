@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        什么是惯性导航系统？ |
+        
+        传感物联
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let ILS = window.ILS || {};
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":true,"preload":true},"toc":{"enable":true,"number":true,"expand_all":true},"back2top":{"enable":true},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            传感物联
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/categories"
+                    >
+                        分类
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">什么是惯性导航系统？</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>iking</span>
+                        <span class="level">Lv2</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-26 17:18:29
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%9F%A5%E7%BC%BA%E8%A1%A5%E6%BC%8F/">查缺补漏</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">基础概念</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa fa-file-word-o"></i> <span>6.2k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa fa-clock-o"></i> <span>21 Mins</span>
+        </span>
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h5 id="gps-%E5%87%BA%E7%8E%B0%E4%B9%8B%E5%89%8D%E7%9A%84%E7%94%9F%E6%B4%BB" id="GPS-出现之前的生活">GPS 出现之前的生活</h5>
+<p>因为现在连厨房里的电器似乎都安装了GPS接收器，很难想象在GPS存在之前的生活。人们是如何应对的？如果没有某种无形的声音告诉你向左、向右转弯，并在可能的情况下掉头，你还能开车吗？对于在卫星导航和智能手机中长大的一代人来说，这是一个严肃的问题--人们究竟是如何计算出他们的位置的？</p>
+<p>事实是，在GPS之前，如果普通人想知道自己在哪里，他们不得不使用地图、观察和不准确的假设。而且，如果情况真的很糟糕，他们就会问路。然而，对于那些有钱、有足够空间、真正需要知道自己在哪里的个人和企业来说，他们的救星往往是惯性导航系统（INS）。</p>
+<h5 id="%E4%BB%80%E4%B9%88%E6%98%AF%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA%E7%B3%BB%E7%BB%9F%EF%BC%9F" id="什么是惯性导航系统？">什么是惯性导航系统？</h5>
+<p>惯性导航系统有各种形状和尺寸。它们的共同点是使用多个惯性传感器，以及某种形式的中央处理单元来跟踪这些传感器的测量值。INS 使用的传感器通常是陀螺仪和加速度计，并且内部通常都有几种传感器。稍后我们将介绍 INS 的实际工作方式，现在，最重要的事情是认识它们与 GPS 的区别 - 您可能更熟悉 GPS。</p>
+<p>打开 GPS 接收器，假设一切正常，在很短的时间后，它将生成位置测量值。接收器生成的位置测量值非常具体，不存在 GPS 的不精确性。它指出“您在这个纬度和这个经度”- 换句话说，它用已知的坐标系提供给我们一个绝对位置。惯性导航系统不能这样工作。就它们而言，它们生成的测量值是相对于他们最后已知的位置。因此，即使在惯性导航系统已经打开几分钟后，它也不能说“您在这个纬度和这个经度”，但它可能会说，“您没有从开始位置移动“。</p>
+<p>那么人们为什么要使用惯性导航系统呢？如果它们不能告诉你你在哪里，那么它们是如何能够将人类导航到月球上的，为什么潜艇不会一直坠毁，飞机和导弹又是如何找到方向的？值得庆幸的是，这些问题的答案很简单。惯性导航系统可以计算出它所处的位置与它的起点--因此，如果你告诉INS的起点，它就可以根据自己的测量结果轻松地计算出现在的位置。这就是宇宙飞船、潜艇、飞机和导弹如何使用INS成功导航的原因--因为它们知道自己的起点。</p>
+<p>为了充分了解惯性导航系统，了解以下内容是很有用的。 <strong>INS参考框架</strong>，这样您就可以准确地解释在X轴、Y轴和Z轴上记录的数值。您还想了解更多关于大多数惯性导航系统中使用的传感器类型----。 <strong>加速计</strong>和 <strong>陀螺</strong>.要了解惯性导航系统是如何在三维空间中跟踪自己的位置的，你还需要了解以下内容 <strong>死算</strong>.然后要想了解INS的优缺点，你还需要知道 <strong>漂移</strong>。</p>
+<h5 id="ins-%E5%AE%9E%E9%99%85%E4%B8%8A%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E7%9A%84%EF%BC%9F" id="INS-实际上是如何运行的？">INS 实际上是如何运行的？</h5>
+<p>惯性导航系统由两个不同的部分组成；第一个是<strong>IMU（惯性测量单元）</strong>，有时也称为IRU（惯性参考单元）。这是提供加速度和角速度测量的 <strong>加速度计和陀螺仪</strong>的总称。第二部分是<strong>导航计算机</strong>。导航计算机从IMU获取测量数据，并利用这些数据计算INS的相对位置、方向和速度。</p>
+<p>目前使用的导航计算机基本上有两种，一种是<strong>稳定平台</strong>，一种是<strong>绑带式导航仪</strong>。</p>
+<ul>
+<li>稳定的平台</li>
+</ul>
+<p><img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gl2pkiq1wvj20j60bmq5a.jpg" alt="微信截图_20201126173440" /><br />
+稳定平台使用真实的、旋转的机械陀螺仪来稳定一个独立于INS旋转的平台。因此，当惯性导航系统旋转时，其内部的稳定平台不会旋转。这样一来，系统就能了解到自己的方位，并能利用加速度计的测量结果。这种系统的缺点是万向节锁定（详见陀螺仪页面），成本高，复杂。</p>
+<ul>
+<li>捆绑式导航仪<br />
+<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gl2plubwjwj20fj0cutao.jpg" alt="微信截图_20201126173636" /><br />
+相反，捷联式导航仪内部的传感器不会独立于 INS 进行移动。如果您愿意，它们会固定下来。这克服了与稳定平台相关的许多问题，这也是现在更多人买得起惯性导航系统的主要原因。与稳定平台内的旋转机械陀螺仪不同，捷联式导航仪内部使用的陀螺仪通常为 MEMS（微机电系统），似乎没有任何活动部件。实际上，最好将它们视为角速度传感器，而不是陀螺仪，尽管人们通常这样叫。</li>
+</ul>
+<h5 id="%E9%82%A3%E4%B9%88%EF%BC%8Cins%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%E5%91%A2%EF%BC%9F" id="那么，INS是如何工作的呢？">那么，INS是如何工作的呢？</h5>
+<p>为了采集三维空间导航所需的测量数据，惯性传感器的轴线以相互垂直的方式布置。换句话说，每个轴与其他两个轴成90°（如下图所示）。<br />
+<img src="https://tvax1.sinaimg.cn/large/5d7f6bc0gy1gl2post1hlj20j20fldr5.jpg" alt="微信截图_20201126173856" /><br />
+<strong>IMU帧</strong><br />
+这张图显示了惯性导航系统用来测量运动和方向的三个轴（xyz）。惯性导航系统中的轴的位置是固定的，所以它们会随着惯性导航系统旋转。每个轴都在两个方向上进行测量--图像中的箭头显示哪个方向被读作正方向。例如</p>
+<ul>
+<li>如果INS沿绿色箭头方向加速，y轴将显示正加速度。</li>
+<li>如果INS向相反方向加速，我们会看到沿y轴的加速度为负。</li>
+</ul>
+<p>还测量了各轴的角速度。</p>
+<ul>
+<li>如果INS按照圆形的红色箭头指示旋转，我们将看到X轴陀螺仪上的读数为正。</li>
+<li>如果INS向相反的方向旋转，我们会看到X轴陀螺仪上的数值为负。</li>
+</ul>
+<p>通过沿着（和围绕）x 轴、y 轴和 z 轴进行测量，导航计算机可以了解其移动和旋转方式。在 IMU 参照系图像中，您可以清楚地看到测量 xyz 轴是如何在我们的产品中布局的。您还可以看到一个圆形箭头，显示 x 轴陀螺如何测量角速度。</p>
+<p>值得指出的是，虽然每个箭头都指向一个方向，但陀螺仪和加速度计仍然沿着或围绕每个轴线在两个方向上进行测量。箭头只是表明传感器将哪个方向视为正向运动。因此，如果产品向下加速（蓝色箭头方向），z轴加速度计将显示一个正值；如果产品向上加速，z轴加速度计将显示一个负值。这里一个重要的考虑因素是 参考框架。</p>
+<h5 id="ins%EF%BC%9A%E5%8F%82%E8%80%83%E6%A1%86%E6%9E%B6" id="INS：参考框架">INS：参考框架</h5>
+<p>在INS到底是如何工作的我们提到惯性导航系统由两个不同的部分组成；第一个是IMU（惯性测量单元）--有时也称为IRU（惯性参考单元）。这里我们将解释IMU框架等术语的含义。</p>
+<p>在上述页面中，我们谈到了当产品向下加速时，z轴加速度计上的测量值为正值，但如果我们将INS翻转，使其定向，如图所示，会发生什么？现在，当INS向下加速时，z轴将记录一个负值。这就是为什么参考帧很重要。</p>
+<p><img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gl2pt8cz49j20j20fldr5.jpg" alt="" /><br />
+对你和我来说，向上意味着&quot;在我们之上&quot;，向下意味着&quot;在我们之下&quot;。同样，我们都知道哪条路是左右，如果我说我向前移动了一米，你就能准确地想象出我做了什么--因为你已经把自己放到了我的参照系中。作为人类，我们很擅长这样做。事实上，我们发现&quot;从另一个角度看问题&quot;是如此的容易，以至于很容易忘记每个物体都有自己的参考框架，而我们如何描述运动取决于所使用的参考框架。</p>
+<p><img src="https://tvax1.sinaimg.cn/large/5d7f6bc0gy1gl2q0kfdn2j20jv07maa5.jpg" alt="" /><br />
+例如，想象自己站在火车站台上。想象您可以看到有人站在火车车厢内寻找座位。当火车驶出车站时，此人开始向火车后方行走。从那个人的角度来看，他们正以恒定的速度向前走。但是对您来说，从站台的参照系看火车时，那个人最初似乎并没有移动 - 因为他们向前行走（在其框架中）的速度与火车在其框架中前进的速度相同。但是，随着火车速度的加快，此人似乎朝火车前进的方向移动。对于您来说，他们正在向后移动，但是对于火车上的人来说，他们仍在向前移动。两种观点都是正确的，只是使用了不同的参照系。<br />
+幸运的是，大多数惯性导航系统都足够聪明，能够将运动从一个参考框架转换到另一个参考框架--只要一开始就给它们一点信息。因此，想象一下，把INS倒过来，让Z轴指向上方。只要我们在开始之前告诉INS是倒立的，那么当你将手向上移动时，惯性测量单元就会在z轴上记录一个正值（就它而言，z轴指向下方）--但惯性导航系统（计算机）知道它实际上是被你倒立着拿在手里的。因此，它将所有的测量值旋转起来，并将它们放到一个对我们有意义的不同参考框架中；这个参考框架表示INS正在向上移动。</p>
+<h5 id="%E5%8A%A0%E9%80%9F%E8%AE%A1" id="加速计">加速计</h5>
+<p>加速计是大多数惯性导航系统中使用的传感器类型之一。从它们的名字就可以猜到，它们测量的是加速度，而不是速度。根据您有多久没有处理过物体的物理特性，您可能还记得加速度的SI单位是m/s²（即：米/秒的平方）。1米/秒²的值意味着每多过一秒，物体的速度就会增加1米/秒（即：米/秒的平方）。</p>
+<p>虽然惯性导航系统并不能直接测量速度，但通过跟踪加速度的大小，以及持续时间的长短，INS可以很容易地通过将加速度乘以时间来计算出速度是多少。</p>
+<p>例如，如果它在5秒内看到2.5米/秒²的加速度，并假设初始速度为0米/秒，那么现在INS的速度一定是12.5米/秒（2.5米/秒²×5秒=12.5米/秒）。</p>
+<p>距离也可以计算。可以用s=0.5×at²来计算。</p>
+<p>其中：</p>
+<ul>
+<li>s为距离</li>
+<li>a为加速度</li>
+<li>t为时间</li>
+</ul>
+<p>在这种情况下，假设惯性导航系统看到X轴上的加速度，它可以计算出它已经向前移动了31.25米（0.5×2.5米/秒²×5秒²=31.25米）。</p>
+<p>因此，拥有三个加速计非常有用，特别是当它们以相互垂直的方式排列时，因为它们允许 INS 测量 3D 空间中的加速度并计算行驶距离和当前速度。但是，当人们第一次看到从三轴加速计输出的数据时，往往会感到困惑，为什么向下的轴显示 -9.81 m/s² 的加速度？为了回答这个问题，我们需要研究加速计的工作原理以及它们实际测量的是什么。</p>
+<p>此时，您可能会想，“等等！之前您说过加速计可以测量加速度”。尽管加速计确实可以测量加速度，但我们不想混淆问题，说加速计实际测量的是相对于自由落体的加速度，这就是为什么静止时垂直加速计的读数为 -9.81 m/s² 的原因。如果还是不明白，不要担心，下一节将对此进行说明。<br />
+<strong>适当的加速度</strong><br />
+你无疑听过牛顿爵士的名字，还记得他写过一些运动定律。牛顿的第一条定律告诉我们，除非有某种力量作用在物体上，否则它将保持完全静止，或者以同样的速度继续运动。换句话说，要想让物体运动，或者改变它的速度，我们需要施加一个力。他的第二条规则描述了物体的加速度如何与作用在它身上的力和物体的质量有关。它可以总结为力=质量×加速度（F=ma）。</p>
+<p>加速计使用牛顿第二运动定律中描述的原理来测量相对于自由落体的加速度。也就是说，它们测量作用在已知质量上的相对力，并以此来计算它必须发生的加速度。为了理解这一点，让我们首先绘制一个简单的加速计。<br />
+<img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gl2qbc04boj20jq087t9c.jpg" alt="微信截图_20201126180100" /><br />
+从图像中，我们可以看到加速度计包含一个已知的质量，它连接到一个能够测量力的传感器。然而，请注意，质量被限制在加速度计的外壳内，只能向左或向右移动--这定义了加速度计的测量轴。<br />
+那么，在现实世界中，这是如何工作的呢？下图显示了当我们将加速计放在汽车中时会发生什么情况。汽车以四种状态显示：静态、加速、匀速巡航和制动。您可以看到在每种情况下加速计内部的质量发生了什么。<br />
+<img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gl2qdtqij3j20r50le425.jpg" alt="微信截图_20201126180321" /><br />
+每当质量发生位移时，测量力的传感器就会记录一个值。因为传感器知道质量和作用在该质量上的力，它可以很容易地计算出一定会导致质量移动的加速度。</p>
+<p>虽然这看起来很符合逻辑，但这并不能解释为什么垂直放置在地板上的加速度计会产生9.81 m/s²的数值，即使地板显然没有移动。然而一个自由落体的加速度计，明明在天空中落下时在加速，却显示出零加速度？答案就在这里。<br />
+<img src="https://tva2.sinaimg.cn/large/5d7f6bc0gy1gl2qfc5x9jj211c09qq46.jpg" alt="微信图片_20201126180450" /><br />
+<img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gl2qg8ro57j213j0c6q50.jpg" alt="微信截图_20201126180549" /><br />
+<img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gl2qhrpbbyj21310ao760.jpg" alt="微信图片_20201126180716" /><br />
+因此，总结一下，加速度计在测量直线运动方面很出色，但在旋转方面就不擅长了，这就是 陀螺 进来。</p>
+<h5 id="%E9%99%80%E8%9E%BA%E4%BB%AA" id="陀螺仪">陀螺仪</h5>
+<p><img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gl2qjcmfvkj20a70ci43v.jpg" alt="Gyro" /></p>
+<p>陀螺仪是大多数产品中使用的传感器类型之一。 惯性导航系统. 大多数惯性导航系统中使用的其他传感器类型之一是 加速计陀螺仪是测量直线运动的好帮手，但它们不擅长测量旋转运动--这就是陀螺仪的作用。陀螺仪根本不关心直线运动，只关心旋转。当描述不同的惯性导航系统时，&quot;陀螺&quot;一词可能意味着不同的东西，这取决于所描述的系统类型。</p>
+<p>在传统意义上，陀螺仪采用一个或多个旋转转子，该转子保持在万向架中或悬挂在其他系统中，该系统旨在将其与外部扭矩隔离。 这种陀螺仪之所以起作用，是因为一旦转子旋转，它便希望保持其轴或旋转。 换句话说，如果您通过陀螺仪的旋转轴投影一条线，则无论您如何尝试扭曲和旋转陀螺仪，投影线将始终指向同一点。 显然，如果您可以对其施加扭矩，则可能会使陀螺仪移动，而采用万向节就是要防止这种运动。</p>
+<p>万向节使用多个彼此垂直安装的同心环，这些同心环通过正交排列的枢轴连接。假设环没有在万向节中死锁，这种设计可使陀螺仪在三轴中自由旋转。当两个轴对齐时，万向节发生死锁。在这种状态下，万向节具有两个自由度，而不是三个，因此在某个方向上施加的外部扭矩可能会影响旋转轴。</p>
+<p>由于陀螺仪的转子希望保持其初始旋转轴，因此可以将传感器安装到万向节上，以测量其连接的外部框架的相对方向变化。这样一来，就可以保持外部框架相对于陀螺轴线的方向变化情况。左图就说明了这一点。<br />
+绑带式导航仪中使用的陀螺仪，不存在万向节锁定的问题。这是因为它们不是传统意义上的陀螺仪。相反，它们是测量角速度的MEMS设备--通常以°/s为单位（说：每秒度）。因此，无论MEMS陀螺仪指向哪个方向，只要它没有围绕测量轴旋转，就会输出0°/s的数值。但是，如果陀螺仪围绕测量轴旋转，每转一圈要花一秒钟的时间，它的输出值就会达到360°/s。</p>
+<p>这将是正的或负的，取决于旋转的方向。<br />
+<strong>MEMS角速率传感器</strong><br />
+<img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gl2qr93gaej20ss0kpgpa.jpg" alt="微信截图_20201126181624" /><br />
+<img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gl2r1ibf1tj20qh07hgmt.jpg" alt="微信截图_20201126182613" /><br />
+从中可以看到，就像加速度计一样，陀螺仪本身不会告诉 INS 它的方向。首次通电时，陀螺仪只知道其旋转速度有多快。INS 的工作是跟踪所有这些测量。因此，如果 INS 在绕 z 轴的 0.25 秒内看到 360°/s 的平均速度，它就知道无论指向哪个方向开始，它现在都旋转了 90° (360°/s÷ 0.25 s = 90°)。当然，如果 INS 在运动之前就知道它是朝北的，并且还知道正陀螺值表示顺时针旋转，那么它可以很容易地算出它现在朝东。</p>
+<p>正如使用三个加速度计是正常的一样，INS 中包含三个陀螺仪也是正常的，它们用于测量围绕三个相互垂直的轴的旋转。通过这种方式，INS可以测量其在三维空间中的方向。它使用一种称为 <strong>死算</strong>.</p>
+<h5 id="%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA%EF%BC%9A%E6%AD%BB%E7%AE%97" id="惯性导航：死算">惯性导航：死算</h5>
+<p>利用三个加速度计和三个陀螺仪的测量数据，该系统的运行情况如下。OxTS 惯性导航系统追踪它在三维空间中的位置。它使用一种叫做&quot;死亡计算&quot;的过程来实现这一目的。</p>
+<p>死神计算的实际过程很容易理解，你从一些源头（这里是陀螺仪和加速度计 ）获取信息，并将它们转化为运动，可以将其添加到你最后已知的位置，从而看到你现在的位置。</p>
+<p>这里展示了一个简化的二维死算的例子。<br />
+<img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gl2r75462rj20sk0o2gs2.jpg" alt="Dead-reckoning-INS" /><br />
+您可以看到，INS 最初是静止的，并且与图像成直角对齐，其 x 轴指向上方。然后，图像显示了其他三个位置以及它们之间的传感器记录的信息。当然，实际上，INS 每秒更新其位置数十或数百次，但是在本例中，仅在发生关键变化时才显示位置更新，以便于理解。</p>
+<p>因此，在时间为零时，INS 是静止的（并且不知道它在哪里）。然后，X 轴加速度计上出现 5 m/s² 的加速度 1 秒，其速度为 5 m/s（或 18 km/h）。随后立即完全停止运行 - 在 0.5 秒内检测到 -10 m/s² 的加速度。由于其他传感器上没有记录其他测量值，因此捷联式导航仪可以轻松地确定它沿 x 轴方向移动了 3.75 米。同样，此时 INS 不知道它在哪里，因为我们没有提供任何位置信息。</p>
+<p>只要INS停在位置更新1处，z轴陀螺仪就会检测到一个90°/s的值，持续0.5秒；因此它知道它刚刚向顺时针方向转了45°。同样，当该运动完成后，INS再次在X轴加速度计上看到加速度。这次是1米/秒²，持续10秒，然后是-5米/秒²，持续2秒。使用与之前相同的技术，INS 可以计算出它现在已经以 45°角从位置更新 1 时的位置再往前移动了 60 米。这就是前面我们说到INS的位置更新是相对于最后一个已知位置而言的。<br />
+最后的移动与之前的移动是不同的。在位置更新2的时候，你可以看到INS已经旋转了，所以它的方向和最初的方向是一样的。然而，当它向位置3移动时，我们可以看到INS现在正与其测量轴（IMU框架）成一定角度移动--它正以135°的方位向后和向右移动。</p>
+<p>由于此运动，同时在 x 轴和 y 轴上录得加速度。也没有引起 INS 停止的负加速度 - 因此，尽管加速度计上的测量值在 1 秒后降为零，但导航计算机知道该装置仍然具有速度。在这种情况下，它以 7.07 m/s（约 25 km/h）的速度运动，位置更新 3 发生在 INS 离开位置更新 2 后 1.5 秒。此时，INS 覆盖了 7.95 米。</p>
+<p>和所有事物一样，惯性导航也有它的优点和缺点。为了获得最精确的位置、方向和动态测量，其中最重要的一点就是<strong>漂移</strong>。</p>
+<h5 id="%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA-%E6%BC%82%E7%A7%BB" id="惯性导航-漂移">惯性导航 漂移</h5>
+<p>和所有的东西一样，惯性导航也有它的优点和缺点。虽然 惯性导航系统无疑在测量位置、方向和动态方面很有优势，但基本的无辅助惯性导航系统的一个致命弱点是漂移。无辅助是指只使用加速度计和陀螺仪测量来计算位置的系统。漂移是用来描述加速度计和陀螺仪测量中的小误差积累的术语，这种小误差逐渐导致INS位置估计越来越不准确。</p>
+<p>很容易理解为什么发生漂移。想象一下，用一根 5 米长的卷尺测量木材的长度。如果您能以 1 毫米的精度读取卷尺上的刻度，则很容易说出这根木材长 4 米 ± 1 毫米。另一方面，如果您只能找到 0.5 米长的卷尺，而您仍然只能以 1 毫米的精度读取它，那么在完成测量并与卷尺一起移动 8 次时，您只能说该木材长 4 米 ± 8 毫米。实际上，您可能根本不会量到 4 m 长。</p>
+<p>INS 中的漂移以相同的方式累积。每次读取加速度计或陀螺仪时，读数都会出现微小的误差。如果我们只读取一个读数就可以得出我们加速或转弯的速度，那么这将不是问题。但是，由于导航计算机正在对每个测量结果进行累加，以计算出它是如何从之前的位置估计值移动的，因此微小的误差会随着时间推移而增加。<br />
+<strong>漂移如何在无辅助的INS中积聚？</strong><br />
+<img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gl2rflg5vpj20qp0q1grq.jpg" alt="Drift-in-inertial-navigation-INS" /><br />
+这张图非常简单地说明了漂移是如何在无辅助惯性导航系统中累积的。我们已经在系统上做了大量的工作，以最大限度地减少这些误差的积累，但无法逃避它们存在的事实。然而，这并不意味着惯性导航系统的原理是无用的--或者说它不如GPS等。远非如此。</p>
+<p>在本页的开头，我们说过漂移是无辅助惯性导航系统的致命弱点，那么辅助系统呢？当你把INS和GPS结合起来，创建一个GPS辅助INS（也可以写成GPS+INS），你就解决了漂移的问题，也解决了影响GPS的问题。这就是为什么OxTS 可以为客户提供有信心的测量能力--通过提供完整的解决方案来测量所有环境下的位置、方向和动态。我们在我们的文章''中详细讨论了这个问题。</p>
+<p><strong>参考：</strong><br />
+<a target="_blank" rel="noopener" href="https://www.oxts.com/zh/what-is-inertial-navigation-guide/">什么是惯性导航系统？</a></p>
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2020/11/26/WSL%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/"
+                        >
+                            <span class="post-nav-title-item">WSL2安装与配置</span>
+                            <span class="post-nav-item">Next posts</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'rXVcsJbmODIt7XpfY9kCyx7o-gzGzoHsz',
+                appKey: 't6yulQfFUYfMPPoRo0qgcpOg',
+                meta: ''.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '😜 尽情吐槽吧~',
+                lang: 'en'.toLowerCase()
+            });
+
+
+            // Valine 评论列表增加"博主"标识
+            const getValineDomTimer = setInterval(() => {
+                const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                if (vcards.length > 0) {
+
+                    let author = 'iking';
+                    if (author) {
+                        author = author.toLocaleLowerCase();
+                    }
+
+                    let email = 'lvqing86@msn.com';
+                    if (email) {
+                        email = email.toLocaleLowerCase();
+                    }
+
+                    for (let vcard of vcards) {
+                        const vnick = vcard.querySelector('.vhead .vnick');
+                        if (vnick.innerHTML.toLocaleLowerCase() === author) {
+                            vcard.classList.add('author');
+                        }
+                    }
+                    clearInterval(getValineDomTimer);
+                } else {
+                    clearInterval(getValineDomTimer);
+                }
+            }, 2000);
+        </script>
+    </div>
+
+
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">iking</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme <a class="theme-version" target="_blank"></a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+        
+
+        
+            <li class="go-comment">
+                <i class="fa fa-comment"></i>
+            </li>
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="sidebar-tools-2">
+        <div class="tools2-container">
+
+    <button class="tools-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <ul class="tools-wrapper">
+        <!-- back2top -->
+        
+            <li class="tools-item scroll-to-bottom">
+                <i class="fa fa-arrow-down"></i>
+            </li>
+            <li class="tools-item scroll-to-top">
+                <i class="fa fa-arrow-up"></i>
+            </li>
+        
+
+        <!-- mode toggle -->
+        <li class="tools-item mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+
+    </ul>
+</div>
+
+    </div>
+
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#gps-%E5%87%BA%E7%8E%B0%E4%B9%8B%E5%89%8D%E7%9A%84%E7%94%9F%E6%B4%BB"><span class="nav-number">1.</span> <span class="nav-text">GPS 出现之前的生活</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什么是惯性导航系统？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ins-%E5%AE%9E%E9%99%85%E4%B8%8A%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E7%9A%84%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">INS 实际上是如何运行的？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%82%A3%E4%B9%88%EF%BC%8Cins%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%E5%91%A2%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">那么，INS是如何工作的呢？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ins%EF%BC%9A%E5%8F%82%E8%80%83%E6%A1%86%E6%9E%B6"><span class="nav-number">5.</span> <span class="nav-text">INS：参考框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E8%AE%A1"><span class="nav-number">6.</span> <span class="nav-text">加速计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%80%E8%9E%BA%E4%BB%AA"><span class="nav-number">7.</span> <span class="nav-text">陀螺仪</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA%EF%BC%9A%E6%AD%BB%E7%AE%97"><span class="nav-number">8.</span> <span class="nav-text">惯性导航：死算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA-%E6%BC%82%E7%A7%BB"><span class="nav-number">9.</span> <span class="nav-text">惯性导航 漂移</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/dark-light-toggle.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/back2top.js"></script>
+
+
+
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+</body>
+</html>

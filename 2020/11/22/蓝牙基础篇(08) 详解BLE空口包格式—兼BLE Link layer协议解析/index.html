@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        蓝牙基础篇(01)---何为蓝牙 |
+        蓝牙基础篇(08)---详解BLE空口包格式—兼BLE Link layer协议解析 |
         
         传感物联
     </title>
@@ -255,7 +255,7 @@ mjx-container[display="true"] + br {
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">蓝牙基础篇(01)---何为蓝牙</span>
+            <span class="title-hover-animation">蓝牙基础篇(08)---详解BLE空口包格式—兼BLE Link layer协议解析</span>
         </div>
 
         
@@ -271,7 +271,7 @@ mjx-container[display="true"] + br {
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2020-11-13 13:35:41
+        <i class="fa fa-calendar-o"></i> 2020-11-22 18:57:28
     </span>
     
         <span class="article-categories article-meta-item">
@@ -307,12 +307,12 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa fa-file-word-o"></i> <span>2.1k Words</span>
+            <i class="fa fa-file-word-o"></i> <span>1.2k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa fa-clock-o"></i> <span>7 Mins</span>
+            <i class="fa fa-clock-o"></i> <span>4 Mins</span>
         </span>
     
     
@@ -324,64 +324,70 @@ mjx-container[display="true"] + br {
         
 
         <div class="article-content markdown-body">
-            <h5 id="%E5%89%8D%E8%A8%80" id="前言">前言</h5>
-<p>蓝牙系列文章属于一个边写边研究的过程，写了三篇之后才意识到对于蓝牙从来都没有一个整体宏观的介绍，所以本文作为前言篇，写这篇文章的目的是完善蓝牙系列博文，并给大家一个对蓝牙的整体认知。</p>
-<p>在你进入蓝牙世界之前，先带你飞到太空整体俯视一下蓝牙这个小星球，了解它的形状，用途等等。从宏观的角度来审视这项神秘的技术。也属于蓝牙系列文章的开篇。毕竟一篇好的文章不仅仅是要做到细枝末节（很显然，我距离这个还很远），也要对整体的轮廓做个概述。先是要明白蓝牙究竟是什么，有什么用，为什么要用它，这些功能又是如何实现的等等。学习过程亦是如此。</p>
-<p>如果对一个东西没有个整体印象那么又怎么能明确你所学习和掌握的跟它有没有关系呢？技术这种东西，如果没人分享造成断层，那么后人又如何才能将之发扬光大呢？？！！所以，谨以此文，献给技术。</p>
-<h5 id="%E5%91%BD%E5%90%8D%E6%B8%8A%E6%BA%90" id="命名渊源">命名渊源</h5>
-<p>首先要问，为什么要叫做蓝牙——Bluetooth即名字由来</p>
-<p>Bluetooth这个名字并不带任何技术性，它既不是缩写也不代表任何东西。据悉是来自于一名丹麦国王 (Harald Blåtand)，他有两件举世闻名的事件，一是在958年统一了丹麦和挪威，二是他的坏牙是深蓝/灰色的（也因此有了Bluetooth这个别称）。</p>
-<p>在1996年的某一天，三大行业领袖因特尔、爱立信和诺基亚开会计划建立支持不同产业和行业之间短距离的无线通信标准，在会议上来自因特尔的Jim Kardash建议使用Bluetooth作为临时代码别称，Jim Kardash说“ Harald Bluetooth国王因统一了各战乱派而闻名，就像我们计划借助短距离无线连接来联合PC和电话行业”。也即因此，沿用了丹麦国王的名字。照这么说来，如果蓝牙是由中国人发明的话那就应该称之为秦始皇，毕竟统一了六国呀，开个玩笑。</p>
-<p>但在不久之后，需要为Bluetooth重新赋予一个严肃的名字。当时给出了两个选择一是RadioWire （无线)，二是PAN（个人局域网）。当时优先考虑PAN这个名字，但是调查后发现PAN已经在互联网上出现了成千上万次，所以就给否定了。而RadioWire又因为商标无法及时发布导致被弃用，别无选择，Bluetooth又成了唯一…</p>
-<p>很庆幸当时否定了pan，跟Bluetooth相比，pan简直是太难听了。 也因此Bluetooth成为了短距离无线通信的代名词。</p>
-<p>而蓝牙的图标则取决于符文（Hagall）（ᚼ）和（Bjarkan）（ᛒ），首字母正好是丹麦国王Harald的缩写</p>
-<h5 id="%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99" id="何为蓝牙">何为蓝牙</h5>
-<p>那么蓝牙是什么呢？？</p>
-<p>蓝牙是一种低功耗的无线连接技术，是一种设备间短距离的无线通讯方式，这句话表明以下几个信息，</p>
+            <p>BLE有几种空中包格式？常见的PDU命令有哪些？PDU和MTU的区别是什么？DLE又是什么？BLE怎么实现重传的？BLE ACK机制原理是什么？希望这篇文章能帮你回答以上问题。</p>
+<p>虽然BLE空口包（packet，又称air interface packet）涉及BLE协议栈link layer，L2CAP，SMP和ATT等各层次，但link layer跟空口包格式关系最紧密，掌握了BLE packet的格式，就很容易理解BLE link layer协议的工作原理，因此文章取名“详解BLE空口包格式—兼BLE link layer协议解析”</p>
+<h5 id="1%E3%80%81ble-packet%E6%A0%BC%E5%BC%8F" id="1、BLE-Packet格式">1、BLE Packet格式</h5>
+<p>BLE链路层（link layer）只定义了一种packet（空中包）格式，如下所示：</p>
+<p><img src="https://tvax1.sinaimg.cn/large/5d7f6bc0gy1gky5iorxedj20f204ujrh.jpg" alt="" /><br />
+而且PDU（protocol data unit，协议数据单元）前两个字节固定为LL header（1个字节长）和payload length（1个字节长，又称data length），即上面的Packet可以展开为：</p>
+<p><img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gky5ioytqjj20fa04n74h.jpg" alt="、" /><br />
+<strong>preamble</strong>（前导帧）为1个字节，根据Access Address第一个Bit，有两种取值情况：0x55或者0xAA（纯PHY层行为），如下所示：</p>
+<p><img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gky5ipxya9j20dy02gmx2.jpg" alt="" /><br />
+<strong>Access Address</strong>用来标示接收者ID或者空中包身份，如前所示，BLE只有一种packet格式，根据Access Address的不同，又区分两种Packet类型：广播包和数据包：</p>
 <ul>
-<li>低耗能技术</li>
-<li>蓝牙跨设备通信</li>
-<li>蓝牙属于短距离通信方式</li>
-<li>蓝牙是一种无线通信方式，既然是无线通信那么势必需要通讯协议标准即蓝牙通信协议</li>
+<li><mark>广播包Access Address 固定为0x8E89BED6 #2196F3</mark>，广播包只能在广播信道（channel）上传输，即只能在37/38/39信道上传输（注：从蓝牙5.0开始广播包可以在其它信道上传输）。广播包发送给附近所有的observer（扫描者）。</li>
+<li><mark>数据包Access Address为一个32bit的随机值 #2196F3</mark>，由Initiator生成。数据包，其实是数据信道上的空中包的简称，数据包只在数据信道上传输，即除37/38/39之外的其余37信道（BLE总共占用40个信道）。每建立一次连接，重新生成一次Access address。数据包是给连接通信使用的，即用于master和slave之间通信的。</li>
 </ul>
-<p>长期以来，看到蓝牙众多的配置文件和协议一直都很乱，其实蓝牙在使用时总共有三种功能</p>
+<p>CRC为24bit，初始向量为：<br />
+<img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gky887rvopj207a0140sn.jpg" alt="enter description here" /></p>
+<h5 id="2%E3%80%81%E8%93%9D%E7%89%99%E5%B9%BF%E6%92%AD%E5%8C%85" id="2、蓝牙广播包">2、蓝牙广播包</h5>
+<p>蓝牙广播包，全名蓝牙广播通道（channel）空中包，即在蓝牙广播通道上传输的空中包，为两种空中包的一种，其具体格式如下所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gky5irllwvj20i503ydg8.jpg" alt="、" /><br />
+<strong>Advertising Header</strong>即前述的LL header，长度为一个字节，其每bit定义如下所示：</p>
+<p><img src="https://tvax1.sinaimg.cn/large/5d7f6bc0gy1gky5itbtodj20gr00xaa1.jpg" alt="" /></p>
 <ul>
-<li>跨设备传输流式音频</li>
-<li>跨设备传输数据</li>
-<li>广播信息</li>
+<li>PDU Type为3bit，具体定义如下。可以看出扫描PDU和发起连接PDU都属于广播包。</li>
 </ul>
-<p>对于一个蓝牙新手来说，首先一定要明白，蓝牙技术有两种类型、三种通信方式。在研究时一定要先明白自己研究的是蓝牙的什么技术，什么通信方式。</p>
-<p>我所说的两种技术就是平常所说的传统蓝牙和ble低功耗蓝牙，这两种技术类型对比如下：</p>
-<p>Basic Rate/Enhanced Data Rate (BR/EDR)基本速率/增强数据速率即所谓的传统蓝牙技术（蓝牙版本2.0/2.1）：<br />
-仅支持P2P一种通信方式，即1：1设备间通信，具有持续无线连接、优化音频流的特点，所以是蓝牙耳机、蓝牙扬声器等音频传输的理想方案<br />
-Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版本4.0/4.1/4.2/4.3），支持三种通信方式：<br />
-第一，P2P(point-to-point)（点对点）:1:1支持短时间无限连接，优化了数据传输能量消耗，可用于无线键盘、无线鼠标等。<br />
-第二，broadcast（广播信息）:1:m。可以实现本地化信息共享。广播信息顾名思义，一设备广播信息，其他对该信息感兴趣的设备接受该信息并进行处理。比如beacon。<br />
-第三，mesh(网格)Ⓜ️m</p>
-<p>三种通信方式即三种拓扑结构对比：<br />
-<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknee29j2xj20jm04nwev.jpg" alt="三种通信方式" /><br />
-两种蓝牙技术对比：<br />
-<img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gknegobe9oj20k00onmz0.jpg" alt="蓝牙技术对比" /><br />
-既然蓝牙技术有两种类型，那么按照排列组合也自然而然可以明白当前市面上目前为什么会有三种蓝牙规格了，说白了也就是有三种蓝牙设备模块，不同之处就在于所搭载的蓝牙技术。一般手机都是蓝牙双模的。</p>
-<p><strong>搭载蓝牙BR/EDR：</strong><br />
-传统蓝牙模块，建立相对较短距离的持续无线连接，因此非常适用于流式音频等应用。<br />
-<strong>搭载蓝牙LE：</strong><br />
-可建立短时间的长距离无线电连接，非常适用于无需持续连接但依赖电池具有较长寿命的的物联网 (IoT) 应用。<br />
-<strong>搭载双模蓝牙：</strong><br />
-同时大袋蓝牙le和传统蓝牙两种技术。双模芯片可支持需要连接 BR/EDR 设备（例如音频耳机）以及 LE 设备（例如穿戴设备或零售信标）的单一设备（例如智能手机或平板电脑）。</p>
-<p>按照版本来说，蓝牙又分为好多版本,常见的比如2.0/2.1/4.0/4.1/4.2/4.3，不同的版本会有不同的蓝牙规格，以及蓝牙的数据传输速率、蓝牙通信距离等都有所不同。</p>
-<p>对于作者来说，从研究条件以及自身兴趣点出发，我会去研究双模蓝牙。每种蓝牙规格有不同的蓝牙规范，蓝牙规范是什么呢？蓝牙规范包含两部分</p>
-<p>一部分是应用层协议，比如hfp，a2dp等等各种profile上层配置文件，称之为蓝牙应用层规范<br />
-另一部分就是蓝牙的核心规范--BluetoothCoreSpecification,蓝牙sig官网有各个版本对应的核心规范规格书，大家可以自行下载。</p>
-<h5 id="%E8%93%9D%E7%89%99%E5%BA%94%E7%94%A8" id="蓝牙应用">蓝牙应用</h5>
-<p>那么蓝牙的应用场景呢？ 蓝牙的应用到底有多广泛呢？用一组数据告诉你：蓝牙已经整合到了超过 30,000 个蓝牙 SIG成员生产的 82 亿件产品中。蓝牙应用已经渗透到了生活的方方面面</p>
-<p>汽车：车载蓝牙，免提呼叫，蓝牙播放音频。全球 12 家主要汽车制造商全部都提供蓝牙免提呼叫系统。智能家居，实现家居自动化，零售位置导向式服务等等。</p>
-<h5 id="%E6%80%BB%E7%BB%93" id="总结">总结</h5>
-<p>文章看到这里，你应该已经搞明白了蓝牙是什么，有什么功能，有什么技术，有什么通信方式，在什么地方用到。研究到这里，就应该研究一下蓝牙的组成了。</p>
-<p>不同种类的蓝牙模块即不同规格的蓝牙具有不同的系统结构。但也有一些共通的：包含射频收发器、基带和协议栈。有关于蓝牙的协议介绍留在下一篇。</p>
-<p>蓝牙的应用已经不再是趋势的问题了，绝对是一个好的研究方向，各位加油吧。</p>
-<p>文章很短，你看完了么？对蓝牙有概念性的认识了吗？问一下自己蓝牙到底是什么，有什么用，该如何着手研究。</p>
-<p>转载自知乎：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54073576">https://zhuanlan.zhihu.com/p/54073576</a></p>
+<p><img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gky5iuexf3j20g005wq5h.jpg" alt="" /><br />
+<mark>注：CONNECT_REQ也可写作CONNECT_IND #2196F3</mark></p>
+<ul>
+<li>TxAdd/RxAdd，各占1bit，表示随后的Device Address字段代表的蓝牙MAC地址类型，值0代表Public地址，值1代表Random地址。</li>
+</ul>
+<p>Payload length定义如下所示，所以广播包PDU最长37个字节。</p>
+<p><img src="https://tvax1.sinaimg.cn/large/5d7f6bc0gy1gky5iw49y6j20hb00vjra.jpg" alt="" /><br />
+<strong>Device Address</strong>，广播包中的强制字段，俗称<strong>蓝牙MAC地址</strong>，如果是广播包，则是advertiser的MAC地址；如果是scan包或者连接请求包，则是scanner的MAC地址。蓝牙device address为<strong>6个字节</strong>，这样Advertising data最长为：<strong>37-6 = 31B</strong>，这就是<strong>广播包数据最长只能31个字节的由来</strong>。如前所述，device address分public和random两种，定义如下所示：</p>
+<p><img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gky5ixux24j20m907tdgy.jpg" alt="" /><br />
+Random device address又有三种类型，定义如下所示：</p>
+<p><img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gky5iz9nalj20dn05mab7.jpg" alt="" /><br />
+<strong>Advertising data</strong>我会另写一篇文章来详述，这里就不再介绍了。</p>
+<p>如下为一个完整的真实的广播包示例，注意：<strong>BLE空中包采用小端模式。</strong></p>
+<p><img src="https://tva3.sinaimg.cn/large/5d7f6bc0gy1gky5j0yci3j20i401qt8o.jpg" alt="" /></p>
+<ul>
+<li>AAD6BE898E600E3B75AB2A02E102010504FF5900538EC7B2
+<ul>
+<li>AA – 前导帧(preamble)</li>
+<li>D6BE898E – 访问地址(access address)</li>
+<li>60 – LL帧头字段(LL header)</li>
+<li>0E – 有效数据包长度(payload length)</li>
+<li>3B75AB2A02E1 – 广播者设备地址(advertiser address)</li>
+<li>02010504FF590053 – 广播数据</li>
+<li>8EC7B2 – CRC24值</li>
+</ul>
+</li>
+</ul>
+<p>注：上述广播包是蓝牙4.x格式，蓝牙5.0广播包除了包含上述格式外（记住：蓝牙5是跟蓝牙4.x兼容的！），还有一些新的定义，以后我也会写一篇关于蓝牙5广播的文章来专门阐述蓝牙5扩展广播包。</p>
+<h5 id="3%E3%80%81%E8%93%9D%E7%89%99%E6%95%B0%E6%8D%AE%E9%80%9A%E9%81%93%E7%A9%BA%E5%8F%A3%E5%8C%85%EF%BC%88%E6%95%B0%E6%8D%AE%E5%8C%85%EF%BC%89" id="3、蓝牙数据通道空口包（数据包）">3、蓝牙数据通道空口包（数据包）</h5>
+<p>与蓝牙广播包相对应，蓝牙数据包是另一种BLE packet。蓝牙数据包是蓝牙数据信道空中包的简称，表示空中包只在蓝牙数据信道上传输，即除37/38/39之外的其他37信道。从格式上来说，蓝牙数据包又分空包（empty packet）和普通数据包（data packet）两种，空包格式如下。</p>
+<p><img src="https://tva1.sinaimg.cn/large/5d7f6bc0gy1gkyyljjexqj204a045jrf.jpg" alt="" /><br />
+由图可见，空包整个payload为空，故名空包。<br />
+普通数据包格式如下所示：</p>
+<p><img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gkyylk540gj20j806r3z2.jpg" alt="" /><br />
+<strong>Data header</strong>，即前述的LL header，在数据包中的定义如下所示：</p>
+<p><img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gkyylm292xj20g200ugln.jpg" alt="" /></p>
+<ul>
+<li>LLID（2bits）， link layer ID，对LL PDU进行分类：LL data PDU和LL control PDU。也就是说，普通的数据信道空中包包含LL数据包和LL控制包两种，具体定义如下所示。请大家注意分清data channel packet（数据信道空中包）和LL data packet（LL数据包）的区别，如前所示data channel packet包含LL data packet和LL control packet，LL data packet只是data channel packet的一种。在不引起上下文歧义的时候，我们把他们统一称作“数据包”。</li>
+</ul>
+<p><img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gkyylobsbwj20c906smy3.jpg" alt="" /></p>
 
         </div>
 
@@ -391,10 +397,10 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
                     <div class="article-prev">
                         <a class="prev btn"
                            rel="prev"
-                           href="/2020/11/13/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(02)%20%E8%93%9D%E7%89%99%E7%BB%84%E6%88%90/"
+                           href="/2020/11/26/WSL%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/"
                         >
                             <i class="fa fa-chevron-left"></i>
-                            <span class="post-nav-title-item">蓝牙基础篇(02)---蓝牙组成</span>
+                            <span class="post-nav-title-item">WSL2安装与配置</span>
                             <span class="post-nav-item">Prev posts</span>
                         </a>
                     </div>
@@ -403,9 +409,9 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
                     <div class="article-next">
                         <a class="next btn"
                            rel="next"
-                           href="/2020/11/06/Hexo-Github-Page%E4%B8%8Egitee-Page%E6%90%AD%E5%BB%BA/"
+                           href="/2020/11/20/%E8%93%9D%E7%89%99%E5%9F%BA%E7%A1%80%E7%AF%87(07)%20%E8%AF%A6%E8%A7%A3BLE%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E8%BF%87%E7%A8%8B/"
                         >
-                            <span class="post-nav-title-item">Hexo+Github Page与gitee Page搭建</span>
+                            <span class="post-nav-title-item">蓝牙基础篇(07)---详解BLE连接建立过程</span>
                             <span class="post-nav-item">Next posts</span>
                             <i class="fa fa-chevron-right"></i>
                         </a>
@@ -562,7 +568,7 @@ Low Energy (LE)低功耗即所谓的新型的低功耗蓝牙技术（蓝牙版�
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E6%B8%8A%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">命名渊源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%95%E4%B8%BA%E8%93%9D%E7%89%99"><span class="nav-number">3.</span> <span class="nav-text">何为蓝牙</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">蓝牙应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81ble-packet%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">1、BLE Packet格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81%E8%93%9D%E7%89%99%E5%B9%BF%E6%92%AD%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">2、蓝牙广播包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%E3%80%81%E8%93%9D%E7%89%99%E6%95%B0%E6%8D%AE%E9%80%9A%E9%81%93%E7%A9%BA%E5%8F%A3%E5%8C%85%EF%BC%88%E6%95%B0%E6%8D%AE%E5%8C%85%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3、蓝牙数据通道空口包（数据包）</span></a></li></ol>
     </div>
 </div>
         
