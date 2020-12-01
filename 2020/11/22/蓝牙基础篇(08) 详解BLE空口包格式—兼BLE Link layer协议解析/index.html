@@ -307,12 +307,12 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa fa-file-word-o"></i> <span>1.2k Words</span>
+            <i class="fa fa-file-word-o"></i> <span>3.1k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa fa-clock-o"></i> <span>4 Mins</span>
+            <i class="fa fa-clock-o"></i> <span>11 Mins</span>
         </span>
     
     
@@ -387,7 +387,121 @@ Random device address又有三种类型，定义如下所示：</p>
 <ul>
 <li>LLID（2bits）， link layer ID，对LL PDU进行分类：LL data PDU和LL control PDU。也就是说，普通的数据信道空中包包含LL数据包和LL控制包两种，具体定义如下所示。请大家注意分清data channel packet（数据信道空中包）和LL data packet（LL数据包）的区别，如前所示data channel packet包含LL data packet和LL control packet，LL data packet只是data channel packet的一种。在不引起上下文歧义的时候，我们把他们统一称作“数据包”。</li>
 </ul>
-<p><img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gkyylobsbwj20c906smy3.jpg" alt="" /></p>
+<p><img src="https://tvax3.sinaimg.cn/large/5d7f6bc0gy1gkyylobsbwj20c906smy3.jpg" alt="" /><br />
+LL Control PDU是在Link layer层直接进行交互的，也就是说他们不会经过后面的L2CAP层，Link layer支持如下control PDU：</p>
+<p><img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gl3lldabiwj20fm0amdjt.jpg" alt="" /></p>
+<ul>
+<li><strong>NESN/SN</strong>，NESN和SN各占1bit。SN全称为sequence number，表示当前发送的packet编号。NESN，next expected sequence number，用来告知对方下一个期待的packet的编号。Link layer使用SN来告知对方这个packet是新数据包还是重传包，用NESN来告诉对方你之前发我的包已经收到了（相当于ACK的作用），我现在期待下一个新的数据包了，因此BLE没有专门的ACK包，它是通过NESN/SN来实现ACK和重传双重功能的。请参考如下表格，仔细揣摩NESN和SN是如何编码的，以同时完成ACK和重传功能。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>空中包编号</th>
+<th>传输方向</th>
+<th>NESN</th>
+<th>SN</th>
+<th>NESNꞌ</th>
+<th>SNꞌ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#1</td>
+<td>M -&gt; S</td>
+<td>1</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>#2</td>
+<td>S -&gt; M</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>#3</td>
+<td>M -&gt; S</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>#4</td>
+<td>S -&gt; M</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>我们来分析#3数据包，#3是master发给slave的，那么#3的NESN和SN是如何确定的呢？其实#3的NESN和SN是通过比较#1和#2的NESN/SN的值来确定的，Master把#1传完之后，会把#1包的NESN和SN记录下来，即表格右边的NESNꞌ和SNꞌ。然后Master会拿SNꞌ跟#2的NESN相比，两者不等，说明slave已经收到了#1包，并期待master发一个新的包给它，此时Master会把SNꞌ增1，形成#3包的SN，表示这个数据包是一个新包，然后发出去；两者相等，说明slave没有收到#1包，此时master需要重传。Master还会拿NESNꞌ跟#2的SN相比，两者相等，说明#2包为新包，然后Master会把NESNꞌ增1，形成#3包的NESN发出去，告诉slave我已经收到#2包了并期待你的下一个包；两者不等，说明#2包为重传包。注意：大家可以从上述表格发现一个规律，就是同一方向相邻的两个数据包，他们的NESN和SN与另一个包的NESN和SN是相反的，比如#3 NESN = #1 #NESN ，#3 SN = #1 #SN ，同样#2和#4 各自的NESN和SN是相互相反的。<br />
+可以简单理解为：<strong>Master只更新SN，Slave只更新NESN</strong><br />
+一、判断是不是新的数据包<br />
+当Slave收到一包，NESN == SN时，认为是新包；<br />
+当Master收到一包， NESN和SN不同，认为是新包；<br />
+二、判断是否为重发包（可用于流控）：<br />
+当Slave收到一包，NESN != SN时，认为是重发包；<br />
+当Master收到一包， NESN和SN相同时，Master重传上一包；</p>
+<p>我们可以用下面的流程图来描述上述过程，NESN 和 SN 怎么交互进行 ARQ 的机制。<br />
+传收数据的两端为： 传送端和接收端，<br />
+同时，传收两端都会纪录下对于本地端的 NESN 和 SN 数值，<br />
+对于接收端而言， 当成功收到一个封包时， 将 NESN 加 1，<br />
+对于传送端而言， 完成传送后， 将本地端的 SN 加 1，<br />
+当下一个封包回收时， 若收到的 NESN ！= 本地端的 SN， 则代表成功传送，<br />
+其状态转换可以以下图表示：</p>
+<p><img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gl3m5er0loj20eq07vab1.jpg" alt="enter description here" /><br />
+简单来说， <mark>NESN' 代表期待收到的封包编号，SN' 代表 （上次） 传送出去的封包编号 #F44336</mark>，<br />
+因此，当成功收到封包时 （期待收到的封包编号==收到的封包编号），<br />
+将 NESN' 加 1， 并在下次封包更新，<br />
+当对方传送的 NESN 和 SN' 相同时， 代表封包遗失 （对方期待的封包编号不变），<br />
+传送端此时需要重新传送封包，<br />
+相对的， 若期待收到的封包编号和收到的封包编号不一致，<br />
+代表错误重传， 此时就直接将封包丢弃.</p>
+<p>考虑到上述的 ARQ 机制， BLE 的封包必须是一来一回，因此， 就算是其中一端没有资料要传送，也必须要回传一个空的封包， 作为 ACK 或是 NACK.</p>
+<ul>
+<li><strong>MD（1bit）</strong>，more data，用来指示对方我还有数据包要传，请继续打开射频窗口准备接收。比如Nordic nRF51822一个connection interval可以发6个包或者更多的包（也就是说，一个connection event包含多个数据包交互），用的就是MD来实现的。以notify命令为例，设备（Server）notify第一个数据包并将MD置1，Client（比如手机）收到这个notify命令后，就知道Server还有数据包要传，此时手机可以继续发一个空包给设备，以让设备把第二个notify命令发过来，详情如下所示。注：Master为手机（Client），Slave为设备（Server）。</li>
+</ul>
+<p><img src="https://tva2.sinaimg.cn/large/5d7f6bc0gy1gl8hsuohgkj20fw05pq3m.jpg" alt="enter description here" /><br />
+<strong>Payload Length or Data Length</strong>，BT4.0/4.1定义如下所示，这就是蓝牙4.0/4.1一个包只能传20个字节的根源。</p>
+<p><img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gl8hswq31uj20fs00vq2x.jpg" alt="" /></p>
+<p>BT4.2之后，Payload length 8 bits全部用来表示长度，这样的话，payload size最大可达251字节（255 – MIC size）。BLE连接建立之后，可以动态更改data length长度（默认为27字节），这个特性叫做<strong>Data Length Extension（DLE）</strong>，DLE是通过Link layer命令：LL_LENGTH_REQ和LL_LENGTH_RSP来实现的。Data length直接跟蓝牙芯片的射频能力有关，像Nordic的nRF51822只支持BT4.1的Data length，就是因为PHY层已经做死了，无法扩展，但Nordic最新的nRF52832和nRF52840，就都支持DLE，即data length最大可到251字节。</p>
+<p><strong>L2CAP length</strong>，2字节长度，表示后面information payload的长度，information payload最大长度除了受这个L2CAP length字段约束，同时还受MTU的限制。<strong>MTU，Maximum Transmission Unit，是ATT层与L2CAP层可以交互的最大数据长度，或者说是Client与Server可以交互的最大长度。</strong></p>
+<p>总结一下，蓝牙spec里面定义了2个长度字段：LL data length和L2CAP length，同时ATT层还定义了一个MTU，以限制ATT PDU最大长度。LL data length可以通过LL_LENGTH_REQ和LL_LENGTH_RSP来动态改变，MTU size则可以通过后面要讲到的Exchange MTU Request和Exchange MTU Response来改变，而L2CAP length无法动态改变，也就是说不能超过65535。</p>
+<p><strong>L2CAP CID</strong>，2字节长度，逻辑通道的ID，BLE使用固定的通道编号，也就是说虽然蓝牙spec里面也允许BLE使用connection oriented channel，但大部分BLE协议栈实现的时候都是使用固定的通道编号，通道编号定义如下所示：</p>
+<p><img src="https://tvax2.sinaimg.cn/large/5d7f6bc0gy1gl8hsyc4bqj20dg05cwfz.jpg" alt="enter description here" /><br />
+<strong>BLE L2CAP Signaling Channel</strong>支持的PDU命令只有三个：</p>
+<ul>
+<li>Command reject</li>
+<li>Connection parameter update request，更新连接参数，比如最小连接间隔，最大连接间隔，slave latency等</li>
+<li>Connection parameter update response，接受或者拒绝上面的请求</li>
+</ul>
+<p><strong>Security Manager Protocol（SMP）</strong> 用来实现配对和密钥分发的，SMP支持如下PDU命令：</p>
+<p><img src="https://tva4.sinaimg.cn/large/5d7f6bc0gy1gl8i64lea3j20eo07zdj2.jpg" alt="enter description here" /></p>
+<p><strong>Attribute Protocol（ATT）</strong>，就是我们经常用到的应用层，应用数据就跟在ATT命令后面，ATT支持如下命令列表：</p>
+<p><img src="https://tvax1.sinaimg.cn/large/5d7f6bc0gy1gl8i65ppx3j20ex0ap797.jpg" alt="enter description here" /></p>
+<p>至此BLE空中包解析就告一段落了，再往上就是应用层数据解析了，这个就不是空中包的范畴，而是GATT和profile要定义的事情，对GATT/ATT/Profile感兴趣的同学可以参考：<mark>低功耗蓝牙ATT/GATT/Profile/Service/Characteristic规格解读 #F44336</mark></p>
+<p>如下为一个完整的真实的数据包示例，注意：BLE空中包采用小端模式。</p>
+<p><img src="https://tvax4.sinaimg.cn/large/5d7f6bc0gy1gl8i67czk4j20dw01wgli.jpg" alt="enter description here" /></p>
+<ul>
+<li>AAAB5D65501E08040004001B130053D550F6
+<ul>
+<li>AA – 前导帧(preamble)</li>
+<li>0x50655DAB – 访问地址(access address)</li>
+<li>1E – LL帧头字段(LL header)</li>
+<li>08 – 有效数据包长度(payload length)</li>
+<li>04000400 – ATT数据长度，以及L2CAP通道编号</li>
+<li>1B – notify command</li>
+<li>0x0013 – 应用数据handle</li>
+<li>0x53 – 真正要发送的应用数据</li>
+<li>0xF650D5 – CRC24值</li>
+</ul>
+</li>
+</ul>
 
         </div>
 
